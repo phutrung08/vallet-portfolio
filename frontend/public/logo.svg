@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<title>Vallet</title>
+<defs><clipPath id="vl-inside"><rect x="9" y="17" width="44" height="38" rx="10"/></clipPath></defs>
+<rect x="22" y="6" width="20" height="13" rx="5" fill="none" stroke="#143642" stroke-width="3"/>
+<rect x="11" y="19" width="44" height="38" rx="10" fill="#143642"/>
+<rect x="9" y="17" width="44" height="38" rx="10" fill="#17A865" stroke="#143642" stroke-width="2.5"/>
+<line x1="20" y1="21" x2="20" y2="51" stroke="#FFF8E1" stroke-width="3" stroke-linecap="round"/>
+<line x1="42" y1="21" x2="42" y2="51" stroke="#FFF8E1" stroke-width="3" stroke-linecap="round"/>
+<g clip-path="url(#vl-inside)">
+  <g transform="translate(0 -5) rotate(-12 27 30)">
+    <rect x="14" y="23" width="26" height="15" rx="1.5" fill="#D8F3E4" stroke="#143642" stroke-width="2"/>
+    <rect x="16.8" y="25.6" width="20.4" height="9.8" rx="1" fill="none" stroke="#0F8F55" stroke-width="1.2"/>
+    <path d="M29.3 28.4 C28.9 27.6 28.1 27.2 27 27.2 C25.7 27.2 24.9 27.9 24.9 28.7 C24.9 30.6 29.2 29.9 29.2 32 C29.2 32.9 28.3 33.6 27 33.6 C25.8 33.6 25 33.1 24.6 32.3 M27 26.2 V34.6" fill="none" stroke="#0F8F55" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="19.3" cy="27.9" r="0.9" fill="#0F8F55"/>
+  </g>
+  <g transform="translate(0 -3) rotate(14 44 27)">
+    <rect x="38" y="23" width="12" height="9" rx="2" fill="#2E9BF0" stroke="#143642" stroke-width="2"/>
+    <line x1="38.5" y1="26.2" x2="49.5" y2="26.2" stroke="#143642" stroke-width="1.6"/>
+  </g>
+</g>
+<rect x="5" y="30" width="52" height="14" rx="5" fill="#FFB800" stroke="#143642" stroke-width="2.5"/>
+<path d="M33 30 H52 A5 5 0 0 1 57 35 V39 A5 5 0 0 1 52 44 H33 A7 7 0 0 1 33 30 Z" fill="#FFD95A" stroke="#143642" stroke-width="2.5"/>
+<circle cx="34" cy="37" r="3.6" fill="#FFF8E1" stroke="#143642" stroke-width="2"/>
+</svg>
