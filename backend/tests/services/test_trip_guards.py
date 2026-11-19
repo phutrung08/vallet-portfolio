@@ -47,11 +47,18 @@ async def test_lock_trip_for_actor_handles_missing_removed_locked_and_closed(
     assert await lock_trip_for_actor(session, trip.id, an.id, require_open=False) is not None
 
     trip.closed_at = NOW
+    trip.locked_at = None
     await session.flush()
     with pytest.raises(RuleViolation) as closed_err:
         await lock_trip_for_actor(session, trip.id, an.id)
     assert closed_err.value.code == "trip_closed"
     assert await lock_trip_for_actor(session, trip.id, an.id, require_open=False) is not None
+
+    trip.locked_at = NOW
+    await session.flush()
+    with pytest.raises(RuleViolation) as locked_over_closed:
+        await lock_trip_for_actor(session, trip.id, an.id)
+    assert locked_over_closed.value.code == "trip_locked"
 
 
 async def test_joined_checks_exclude_revoked_and_expired_devices(session: AsyncSession) -> None:

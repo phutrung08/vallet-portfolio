@@ -9,12 +9,17 @@ from app.repositories.models import Trip
 from app.services.errors import RuleViolation
 
 
-def require_open_trip(trip: Trip) -> None:
-    """Reject mutations on closed or locked trips."""
-    if trip.closed_at is not None:
-        raise RuleViolation("trip_closed")
+def require_unlocked_trip(trip: Trip) -> None:
+    """Reject writes on a locked (read-only) trip."""
     if trip.locked_at is not None:
         raise RuleViolation("trip_locked")
+
+
+def require_open_trip(trip: Trip) -> None:
+    """Reject mutations on locked or closed trips (locked supersedes closed)."""
+    require_unlocked_trip(trip)
+    if trip.closed_at is not None:
+        raise RuleViolation("trip_closed")
 
 
 async def require_active_caller(

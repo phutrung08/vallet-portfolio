@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.api import health
+from app.api import devices, health, trips
 from app.api.body_limit import BodyLimitMiddleware
 from app.api.csrf import CsrfMiddleware
 from app.api.errors import register_error_handlers
@@ -44,6 +44,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.add_middleware(SecurityHeadersMiddleware, hsts=resolved.cookie_secure)
     register_error_handlers(application, hsts=resolved.cookie_secure)
     application.include_router(health.router)
+    application.include_router(devices.router)
+    application.include_router(trips.router)
     return application
 
 
