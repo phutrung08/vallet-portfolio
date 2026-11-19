@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings, get_settings
-from app.core.db import get_session
+from app.core.db import get_readonly_session, get_session
 from app.services import devices
 
 
@@ -39,6 +39,7 @@ def get_now() -> datetime:
 
 # scope="function" commits before the response is sent, so a failed commit still becomes 409.
 DbSession = Annotated[AsyncSession, Depends(get_db, scope="function")]
+ReadonlySnapshot = Annotated[AsyncSession, Depends(get_readonly_session)]
 AppSettings = Annotated[Settings, Depends(get_settings)]
 Now = Annotated[datetime, Depends(get_now)]
 

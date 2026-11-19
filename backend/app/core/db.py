@@ -1,4 +1,5 @@
 from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from functools import lru_cache
 
 from sqlalchemy.ext.asyncio import (
@@ -40,6 +41,27 @@ def get_sessionmaker() -> async_sessionmaker[AsyncSession]:
 async def get_session() -> AsyncIterator[AsyncSession]:
     """Yield one async database session per request."""
     async with get_sessionmaker()() as session:
+        yield session
+
+
+@asynccontextmanager
+async def readonly_session(engine: AsyncEngine) -> AsyncIterator[AsyncSession]:
+    """Yield an async session inside a ``REPEATABLE READ READ ONLY`` transaction."""
+    async with engine.connect() as connection:
+        # Isolation and read-only options must be configured before BEGIN on asyncpg.
+        await connection.execution_options(
+            isolation_level="REPEATABLE READ", postgresql_readonly=True
+        )
+        async with (
+            connection.begin(),
+            AsyncSession(bind=connection, expire_on_commit=False) as session,
+        ):
+            yield session
+
+
+async def get_readonly_session() -> AsyncIterator[AsyncSession]:
+    """Yield one read-only snapshot session per request."""
+    async with readonly_session(get_engine()) as session:
         yield session
 
 

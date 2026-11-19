@@ -23,7 +23,7 @@ from app.api.deps import (
 )
 from app.api.idempotency import IdempotentCreate
 from app.core.config import Settings, get_settings
-from app.core.db import get_session
+from app.core.db import get_readonly_session, get_session
 from app.main import create_app
 from app.repositories import events as event_repository
 from app.repositories.models import Device
@@ -165,6 +165,7 @@ def app(session: AsyncSession, settings: Settings, clock: FrozenClock) -> FastAP
     app = create_app(settings)
     app.include_router(probe)
     app.dependency_overrides[get_session] = lambda: session
+    app.dependency_overrides[get_readonly_session] = lambda: session
     app.dependency_overrides[get_settings] = lambda: settings
     app.dependency_overrides[get_now] = clock
     return app
