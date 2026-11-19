@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:18.7@sha256:9f4fd4aa918f52ae3d6f3b687f1de90d8f867cd4d520021545a9a50c120eae3b
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vallet}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vallet_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-vallet}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  backend:
+    profiles: ["fullstack"]
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      VALLET_ENVIRONMENT: development
+      VALLET_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-vallet}:${POSTGRES_PASSWORD:-vallet_dev}@db:5432/${POSTGRES_DB:-vallet}
+      VALLET_COOKIE_SECURE: "false"
+      VALLET_ALLOWED_ORIGINS: '["http://localhost:8080"]'
+      VALLET_TRUST_PROXY_HEADERS: "true"
+
+  web:
+    profiles: ["fullstack"]
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:8080:80"
+
+volumes:
+  db-data:
