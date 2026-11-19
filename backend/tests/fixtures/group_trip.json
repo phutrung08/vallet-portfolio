@@ -1,0 +1,685 @@
+{
+ "source": "Anonymized 6-person group trip dataset (42 expenses, 28,614,000 VND)",
+ "currency": "VND",
+ "members": [
+  "an",
+  "binh",
+  "chi",
+  "dung",
+  "em",
+  "giang"
+ ],
+ "expenses": [
+  {
+   "date": null,
+   "title": "Flight (An)",
+   "amount": 2200000,
+   "paid_by": "an",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an"
+    ]
+   }
+  },
+  {
+   "date": null,
+   "title": "Flight (Binh)",
+   "amount": 2200000,
+   "paid_by": "binh",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "binh"
+    ]
+   }
+  },
+  {
+   "date": null,
+   "title": "Flight (Chi)",
+   "amount": 2200000,
+   "paid_by": "chi",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "chi"
+    ]
+   }
+  },
+  {
+   "date": null,
+   "title": "Flight (Dung)",
+   "amount": 2200000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "dung"
+    ]
+   }
+  },
+  {
+   "date": null,
+   "title": "Flight (Em)",
+   "amount": 2200000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "em"
+    ]
+   }
+  },
+  {
+   "date": null,
+   "title": "Flight (Giang)",
+   "amount": 2200000,
+   "paid_by": "giang",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-05",
+   "title": "Birthday gift for Giang",
+   "amount": 250000,
+   "paid_by": "binh",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-05",
+   "title": "Airport to hotel taxi",
+   "amount": 300000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-05",
+   "title": "Homestay lodging",
+   "amount": 2130000,
+   "paid_by": "binh",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-05",
+   "title": "Late-night noodles",
+   "amount": 359000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Morning coffee",
+   "amount": 310000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Taxi to coffee lounge",
+   "amount": 102000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Taxi to lunch",
+   "amount": 60000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Group lunch",
+   "amount": 876000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Taxi from lunch to coffee lounge",
+   "amount": 60000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Taxi to rose garden",
+   "amount": 84000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Drinks at rose garden",
+   "amount": 414000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Taxi from garden to dinner restaurant",
+   "amount": 72000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Hill shuttle fee",
+   "amount": 50000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "chi",
+     "dung"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Group dinner",
+   "amount": 1380000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Mini entremet cake",
+   "amount": 185000,
+   "paid_by": "binh",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Taxi to night market",
+   "amount": 54000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Late-night soy milk and pastries",
+   "amount": 330000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "title": "Resort lodge stay",
+   "amount": 3800000,
+   "paid_by": "binh",
+   "split": {
+    "mode": "exact",
+    "amounts": {
+     "an": 588000,
+     "binh": 724000,
+     "chi": 724000,
+     "dung": 588000,
+     "em": 588000,
+     "giang": 588000
+    }
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Breakfast pancakes and milk",
+   "amount": 390000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Taxi to ancient village site",
+   "amount": 162000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Sightseeing entry ticket",
+   "amount": 160000,
+   "paid_by": "em",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "dung"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Taxi to chicken hotpot lunch",
+   "amount": 130000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Chicken hotpot lunch",
+   "amount": 850000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Taxi back to lodge",
+   "amount": 57000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "em",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Taxi to sturgeon hotpot dinner",
+   "amount": 50000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Sturgeon hotpot dinner",
+   "amount": 708000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "title": "Night market warm milk",
+   "amount": 150000,
+   "paid_by": "chi",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Spicy fish noodle breakfast",
+   "amount": 300000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Taxi to historic campus",
+   "amount": 44000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Taxi back to lodge",
+   "amount": 36000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Grilled chicken and bamboo rice lunch",
+   "amount": 527000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Taxi to supermarket mall",
+   "amount": 44000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Cinema tickets",
+   "amount": 300000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Afternoon snacks at mall",
+   "amount": 395000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Taxi back to lodge",
+   "amount": 40000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "title": "Airport departure taxi",
+   "amount": 255000,
+   "paid_by": "dung",
+   "split": {
+    "mode": "equal",
+    "participants": [
+     "an",
+     "binh",
+     "chi",
+     "dung",
+     "giang"
+    ]
+   }
+  }
+ ],
+ "sheet": {
+  "total": 28614000,
+  "per_member_total": {
+   "an": 4586183,
+   "binh": 4870183,
+   "chi": 4972683,
+   "dung": 5086433,
+   "em": 4284083,
+   "giang": 4814433
+  },
+  "nets": {
+   "an": -2386183,
+   "binh": 3694817,
+   "chi": -2622683,
+   "dung": 1518567,
+   "em": 2409917,
+   "giang": -2614433
+  }
+ }
+}
