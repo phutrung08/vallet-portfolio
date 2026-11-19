@@ -5,13 +5,10 @@ import pytest
 from fastapi import FastAPI, Response
 from httpx import ASGITransport, AsyncClient
 
-from app.api.body_limit import BodyLimitMiddleware
-from app.api.csrf import CsrfMiddleware
-from app.api.errors import register_error_handlers
-from app.api.rate_limit import RateLimitMiddleware
-from app.api.security_headers import SecurityHeadersMiddleware
 from app.core import limits
-from tests.api.test_csrf import CSRF_HEADERS
+from app.core.config import Settings
+from app.main import create_app
+from tests.api.conftest import CSRF_HEADERS
 
 pytestmark = pytest.mark.anyio
 
@@ -27,16 +24,8 @@ type MakeClient = Callable[[bool], AsyncClient]
 
 
 def build_app(cookie_secure: bool) -> FastAPI:
-    app = FastAPI()
-    app.add_middleware(CsrfMiddleware, allowed_origins=["http://localhost:5173"])
-    app.add_middleware(BodyLimitMiddleware, max_bytes=limits.MAX_REQUEST_BODY_BYTES)
-    app.add_middleware(RateLimitMiddleware, trust_proxy_headers=False)
-    app.add_middleware(SecurityHeadersMiddleware, hsts=cookie_secure)
-    register_error_handlers(app, hsts=cookie_secure)
-
-    @app.get("/health")
-    def health() -> dict[str, str]:
-        return {"status": "ok"}
+    settings = Settings(_env_file=None, environment="development", cookie_secure=cookie_secure)
+    app = create_app(settings)
 
     @app.post("/probe")
     def probe() -> dict[str, str]:
