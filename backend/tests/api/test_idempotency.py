@@ -186,3 +186,56 @@ async def test_a_key_that_is_not_a_uuid_is_422(
     assert response.json()["code"] == "validation_error"
     assert response.json()["fields"] == ["header.idempotency-key"]
     assert await event_count(session, trip_id) == 0
+
+
+@pytest.mark.parametrize("endpoint", ["expenses", "contributions", "payments"])
+async def test_money_create_endpoints_honor_idempotency_key_and_conflict(
+    client: AsyncClient, endpoint: str
+) -> None:
+    created_trip = await client.post(
+        "/trips",
+        json={
+            "name": "Sa Pa",
+            "uses_fund": True,
+            "creator_name": "An",
+            "member_names": ["Binh"],
+        },
+    )
+    assert created_trip.status_code == 201
+    detail = created_trip.json()
+    trip_id = detail["id"]
+    ids = [m["id"] for m in detail["members"]]
+
+    if endpoint == "expenses":
+        url = f"/trips/{trip_id}/expenses"
+        body: dict[str, object] = {
+            "title": "Dinner",
+            "amount": 100_000,
+            "category": "food",
+            "spent_on": "2026-11-07",
+            "paid_by": ids[0],
+            "split": {"mode": "equal", "participants": ids},
+        }
+    elif endpoint == "contributions":
+        url = f"/trips/{trip_id}/fund/contributions"
+        body = {"member_id": ids[0], "amount": 100_000, "contributed_on": "2026-11-07"}
+    else:
+        url = f"/trips/{trip_id}/payments"
+        body = {
+            "payer": ids[1],
+            "payee": ids[0],
+            "amount": 100_000,
+            "paid_on": "2026-11-08",
+        }
+
+    key = str(uuid.uuid4())
+    first = await client.post(url, json=body, headers={"Idempotency-Key": key})
+    replay = await client.post(url, json=body, headers={"Idempotency-Key": key})
+    conflict = await client.post(
+        url, json=body | {"amount": 200_000}, headers={"Idempotency-Key": key}
+    )
+
+    assert (first.status_code, replay.status_code, conflict.status_code) == (201, 201, 409)
+    assert replay.json() == first.json()
+    assert replay.headers["idempotent-replayed"] == "true"
+    assert conflict.json() == IDEMPOTENCY_CONFLICT
