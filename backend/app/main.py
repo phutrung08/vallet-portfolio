@@ -20,6 +20,7 @@ from app.api import (
 from app.api.body_limit import BodyLimitMiddleware
 from app.api.csrf import CsrfMiddleware
 from app.api.errors import register_error_handlers
+from app.api.prefix import StripPrefixMiddleware
 from app.api.rate_limit import RateLimitMiddleware
 from app.api.security_headers import SecurityHeadersMiddleware
 from app.core.config import Settings, get_settings
@@ -34,7 +35,7 @@ async def _lifespan(_: FastAPI) -> AsyncIterator[None]:
     await dispose_engine()
 
 
-def create_app(settings: Settings | None = None) -> FastAPI:
+def create_app(settings: Settings | None = None, *, strip_prefix: str = "") -> FastAPI:
     """Build and configure the FastAPI application instance."""
     configure_logging()
     resolved = settings or get_settings()
@@ -46,7 +47,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         openapi_url="/openapi.json" if docs_enabled else None,
         lifespan=_lifespan,
     )
-    # Last added runs first: SecurityHeaders wraps RateLimit, BodyLimit, and Csrf.
+    # Last added runs first: optional StripPrefix wraps SecurityHeaders, RateLimit, BodyLimit, Csrf.
     # Unhandled 500s handled by Starlette's ServerErrorMiddleware also receive security headers
     # from register_error_handlers().
     application.add_middleware(CsrfMiddleware, allowed_origins=resolved.allowed_origins)
@@ -55,6 +56,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         RateLimitMiddleware, trust_proxy_headers=resolved.trust_proxy_headers
     )
     application.add_middleware(SecurityHeadersMiddleware, hsts=resolved.cookie_secure)
+    if strip_prefix:
+        application.add_middleware(StripPrefixMiddleware, prefix=strip_prefix)
     register_error_handlers(application, hsts=resolved.cookie_secure)
     application.include_router(health.router)
     application.include_router(devices.router)

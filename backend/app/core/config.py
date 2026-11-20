@@ -1,8 +1,8 @@
 from functools import lru_cache
 from typing import Literal, Self
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from pydantic import Field, PrivateAttr, SecretStr, model_validator
+from pydantic import Field, PrivateAttr, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.core.crypto import parse_key
@@ -17,6 +17,40 @@ MIN_SHARE_LINK_KEY_BYTES = 32
 DEV_BANK_DATA_KEY = "ZGV2LW9ubHktYmFuay1rZXktbm90LWZvci1wcm9kISE"
 DEV_ORIGIN = "http://localhost:5173"
 _LOOPBACK_HOSTS = frozenset({"localhost", "127.0.0.1", "::1"})
+_POSTGRES_SCHEMES = frozenset({"postgres", "postgresql", "postgresql+asyncpg"})
+
+
+def normalize_asyncpg_url(url: str) -> str:
+    """Normalize libpq/Neon Postgres URLs for SQLAlchemy ``asyncpg``.
+
+    Rewrites ``postgres://`` and ``postgresql://`` schemes to ``postgresql+asyncpg://``,
+    removes ``channel_binding`` (unsupported by ``asyncpg``), and translates ``sslmode`` to
+    ``ssl`` when ``ssl`` is not already set.
+    """
+    parsed = urlsplit(url)
+    scheme = parsed.scheme.lower()
+    if scheme not in _POSTGRES_SCHEMES:
+        return url
+    target_scheme = "postgresql+asyncpg"
+    pairs = parse_qsl(parsed.query, keep_blank_values=True)
+    has_ssl = any(key == "ssl" for key, _ in pairs)
+    new_pairs: list[tuple[str, str]] = []
+    changed_query = False
+    for key, value in pairs:
+        if key == "channel_binding":
+            changed_query = True
+            continue
+        if key == "sslmode":
+            changed_query = True
+            if not has_ssl:
+                new_pairs.append(("ssl", value))
+                has_ssl = True
+            continue
+        new_pairs.append((key, value))
+    if parsed.scheme == target_scheme and not changed_query:
+        return url
+    new_query = urlencode(new_pairs) if changed_query else parsed.query
+    return urlunsplit((target_scheme, parsed.netloc, parsed.path, new_query, parsed.fragment))
 
 
 class Settings(BaseSettings):
@@ -30,6 +64,7 @@ class Settings(BaseSettings):
     app_name: str = "Vallet"
     environment: Environment = "production"
     database_url: str = LOCAL_DATABASE_URL
+    db_null_pool: bool = False
     cookie_secure: bool = True
     device_ttl_days: int = Field(default=180, ge=1)
     share_link_key: SecretStr = SecretStr(DEV_SHARE_LINK_KEY)
@@ -41,6 +76,11 @@ class Settings(BaseSettings):
     # behind a reverse proxy that sets that header; otherwise any client could pick its own key.
     trust_proxy_headers: bool = False
     _bank_data_key_bytes: bytes = PrivateAttr(default=b"")
+
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def _normalize_database_url(cls, value: object) -> object:
+        return normalize_asyncpg_url(value) if isinstance(value, str) else value
 
     @model_validator(mode="after")
     def _require_real_share_link_key(self) -> Self:

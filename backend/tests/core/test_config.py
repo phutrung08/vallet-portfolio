@@ -3,6 +3,7 @@ import os
 
 import pytest
 from pydantic import SecretStr, ValidationError
+from sqlalchemy.pool import NullPool
 
 from app.core.config import (
     DEV_BANK_DATA_KEY,
@@ -12,8 +13,9 @@ from app.core.config import (
     Environment,
     Settings,
     get_settings,
+    normalize_asyncpg_url,
 )
-from app.core.db import dispose_engine, get_engine, get_sessionmaker
+from app.core.db import create_engine, dispose_engine, get_engine, get_sessionmaker
 
 GOOD_KEY = "k" * 43
 GOOD_BANK_KEY = base64.urlsafe_b64encode(bytes(range(32))).decode()
@@ -218,3 +220,61 @@ async def test_dispose_engine_is_safe_before_and_after_initialization(
     assert engine is not get_engine()
     await dispose_engine()
     get_settings.cache_clear()
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        (
+            "postgresql://user:p%40ss@ep-host-pooler.aws.neon.tech/vallet?sslmode=require&channel_binding=require",
+            "postgresql+asyncpg://user:p%40ss@ep-host-pooler.aws.neon.tech/vallet?ssl=require",
+        ),
+        (
+            "postgres://user:pass@db.example.com:5432/vallet?sslmode=verify-full",
+            "postgresql+asyncpg://user:pass@db.example.com:5432/vallet?ssl=verify-full",
+        ),
+        (
+            "postgresql://user:pass@db.example.com/vallet?ssl=disable&sslmode=require",
+            "postgresql+asyncpg://user:pass@db.example.com/vallet?ssl=disable",
+        ),
+        (
+            "postgresql+asyncpg://user:pass@db.example.com/vallet?ssl=require",
+            "postgresql+asyncpg://user:pass@db.example.com/vallet?ssl=require",
+        ),
+    ],
+)
+def test_normalize_asyncpg_url_adapts_neon_and_libpq_urls(raw: str, expected: str) -> None:
+    assert normalize_asyncpg_url(raw) == expected
+
+
+def test_settings_normalizes_neon_url_while_still_rejecting_loopback_in_production() -> None:
+    neon_url = "postgresql://vallet_app:secret@ep-demo.aws.neon.tech/vallet?sslmode=require&channel_binding=require"
+    settings = make_prod_settings(database_url=neon_url)
+    assert (
+        settings.database_url
+        == "postgresql+asyncpg://vallet_app:secret@ep-demo.aws.neon.tech/vallet?ssl=require"
+    )
+
+    with pytest.raises(ValidationError, match="VALLET_DATABASE_URL"):
+        make_prod_settings(database_url="postgresql://prod:secret@localhost:5432/vallet")
+
+
+@pytest.mark.anyio
+async def test_db_null_pool_setting_builds_null_pool_engine(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    get_sessionmaker.cache_clear()
+    get_engine.cache_clear()
+    get_settings.cache_clear()
+    try:
+        monkeypatch.setenv("VALLET_ENVIRONMENT", "development")
+        monkeypatch.setenv("VALLET_DB_NULL_POOL", "true")
+        engine = get_engine()
+        assert isinstance(engine.pool, NullPool)
+
+        pooled = create_engine(LOCAL_DATABASE_URL, null_pool=False)
+        assert not isinstance(pooled.pool, NullPool)
+        await pooled.dispose()
+    finally:
+        await dispose_engine()
+        get_settings.cache_clear()

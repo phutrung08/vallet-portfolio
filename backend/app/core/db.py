@@ -8,14 +8,29 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
+from sqlalchemy.pool import NullPool
 
-from app.core.config import get_settings
+from app.core.config import get_settings, normalize_asyncpg_url
+
+_SERVERLESS_CONNECT_ARGS: dict[str, object] = {
+    "statement_cache_size": 0,
+    "prepared_statement_cache_size": 0,
+}
 
 
-def create_engine(url: str) -> AsyncEngine:
+def create_engine(url: str, *, null_pool: bool = False) -> AsyncEngine:
     """Build an async SQLAlchemy engine configured for Vallet's connection pool."""
+    normalized = normalize_asyncpg_url(url)
+    if null_pool:
+        return create_async_engine(
+            normalized,
+            poolclass=NullPool,
+            # Keep bound values (token hashes, later bank details) out of error messages and logs.
+            hide_parameters=True,
+            connect_args=_SERVERLESS_CONNECT_ARGS,
+        )
     return create_async_engine(
-        url,
+        normalized,
         pool_size=5,
         max_overflow=5,
         pool_timeout=10,
@@ -29,7 +44,8 @@ def create_engine(url: str) -> AsyncEngine:
 @lru_cache
 def get_engine() -> AsyncEngine:
     """Return the process-wide cached ``AsyncEngine``."""
-    return create_engine(get_settings().database_url)
+    settings = get_settings()
+    return create_engine(settings.database_url, null_pool=settings.db_null_pool)
 
 
 @lru_cache
