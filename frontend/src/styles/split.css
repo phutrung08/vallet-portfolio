@@ -1,0 +1,125 @@
+/*
+ * Page columns beside the navigation: the centered column of screens without the nav, and the
+ * list and detail panes of SplitLayout.vue. Breakpoints come from tokens.css, the nav reserves from nav.css.
+ * Plain unlayered rules (besides the utility) so they win over the utilities they adjust.
+ */
+
+/* A centered column for screens that are not split yet (home, forms, settings). */
+@utility col-center {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 28rem;
+}
+
+/* A SplitLayout on a screen without the nav keeps no room for it. */
+.split-no-nav {
+  --nav-reserve-left: 0px;
+  --nav-reserve-right: 0px;
+  --nav-reserve-bottom: 0px;
+}
+
+/* The app root is a column, so banners above a screen (offline, demo) take their height and a SplitLayout fills the rest. */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* SplitLayout below the split breakpoint: one pane at a time (the parent's `show`), in the column .col-nav uses. */
+.split-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 28rem);
+  justify-content: center;
+  flex: 1 0 auto;
+  margin-inline: var(--nav-reserve-left) var(--nav-reserve-right);
+}
+
+@media (width < theme(--breakpoint-split)) {
+  .split-away {
+    display: none;
+  }
+}
+
+/*
+ * From the split breakpoint: list and detail side by side, each scrolling on its own. The list keeps at
+ * least ~290px and grows to 400px by tablet landscape; the detail grows to a readable 40rem. Whatever
+ * is left centers the pair in the space the nav leaves free.
+ */
+@media (width >= theme(--breakpoint-split)) {
+  .split-layout {
+    grid-template-columns: clamp(18.125rem, 43vw - 2.5rem, 25rem) minmax(0, 40rem);
+    grid-template-rows: minmax(0, 1fr);
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .split-pane {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .split-detail {
+    border-left: 1.5px solid var(--c-line);
+  }
+}
+
+/*
+ * Foldables and dual screens (Viewport Segments API), progressive enhancement like nav.css.
+ * Vertical hinge: the list fills the left segment and the detail the right one, whatever the width;
+ * the nav reserve comes off the segment the rail sits in.
+ */
+@media (horizontal-viewport-segments: 2) {
+  .split-layout {
+    grid-template-columns:
+      calc(env(viewport-segment-width 0 0) - var(--nav-reserve-left))
+      calc(env(viewport-segment-width 1 0) - var(--nav-reserve-right));
+    grid-template-rows: minmax(0, 1fr);
+    column-gap: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0));
+    justify-content: start;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .split-pane {
+    display: flex;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .split-detail {
+    border-left: 0;
+  }
+
+  /* Not split yet: wholly in the right segment instead of across the hinge. */
+  .col-center {
+    margin-left: calc(env(viewport-segment-left 1 0) + max(0.75rem, (env(viewport-segment-width 1 0) - 28rem) / 2));
+    width: min(28rem, env(viewport-segment-width 1 0) - 1.5rem);
+  }
+}
+
+/* Horizontal fold: a single pane in the top segment, as on a phone, scrolling inside it. */
+@media (vertical-viewport-segments: 2) {
+  .split-layout {
+    grid-template-columns: minmax(0, 28rem);
+    grid-template-rows: minmax(0, 1fr);
+    justify-content: center;
+    flex: none;
+    height: env(viewport-segment-bottom 0 0);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .split-pane {
+    overflow-y: auto;
+  }
+
+  .split-away {
+    display: none;
+  }
+
+  .split-detail {
+    border-left: 0;
+  }
+}
