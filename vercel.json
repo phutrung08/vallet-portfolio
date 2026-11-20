@@ -1,9 +1,23 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
   "installCommand": "cd frontend && npm ci",
-  "buildCommand": "cd frontend && VITE_DEMO_ONLY=true npm run build",
+  "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "backend/app/**"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/api",
+      "destination": "/api/index.py"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
@@ -11,7 +25,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api(?:/|$)).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
