@@ -1,0 +1,151 @@
+/*
+ * Palette switches via --c-* custom properties: light by default, pinned via [data-theme],
+ * and dark under prefers-color-scheme when data-theme is unset.
+ */
+:root {
+  color-scheme: light dark;
+  --c-cream: #fff8e1;
+  --c-sand: #f4edd3;
+  --c-surface: #ffffff;
+  --c-line: #efe6c6;
+  --c-ink: #143642;
+  --c-muted: #526c74;
+  --c-edge: #143642;
+  --c-green-soft: #d8f3e4;
+  --c-green-ink: #0b7a48;
+  --c-yellow-soft: #ffd95a;
+  --c-sky-soft: #bfe3ff;
+  --c-danger: #b3401a;
+  --c-danger-soft: #ffe1d6;
+  --c-on-accent: #ffffff;
+  --c-on-yellow: #143642;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-cream: #10201f;
+  --c-sand: #223e3c;
+  --c-surface: #18302f;
+  --c-line: #2c4a47;
+  --c-ink: #fff8e1;
+  --c-muted: #a9c0bc;
+  --c-edge: #6e9e98;
+  --c-green-soft: #1c4a3a;
+  --c-green-ink: #7be0ae;
+  --c-yellow-soft: #4d3e0e;
+  --c-sky-soft: #173f5e;
+  --c-danger: #ff9b7a;
+  --c-danger-soft: #4a2418;
+  --c-on-accent: #10201f;
+  --c-on-yellow: #10201f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --c-cream: #10201f;
+    --c-sand: #223e3c;
+    --c-surface: #18302f;
+    --c-line: #2c4a47;
+    --c-ink: #fff8e1;
+    --c-muted: #a9c0bc;
+    --c-edge: #6e9e98;
+    --c-green-soft: #1c4a3a;
+    --c-green-ink: #7be0ae;
+    --c-yellow-soft: #4d3e0e;
+    --c-sky-soft: #173f5e;
+    --c-danger: #ff9b7a;
+    --c-danger-soft: #4a2418;
+    --c-on-accent: #10201f;
+    --c-on-yellow: #10201f;
+  }
+}
+
+@theme {
+  --color-*: initial;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Brand accents stay constant across themes; on-green ink maintains >= 5.4:1 contrast. */
+  --color-green: #17a865;
+  --color-green-dark: #0f8f55;
+  --color-on-green: #10201f;
+  --color-yellow: #ffb800;
+  --color-sky: #2e9bf0;
+  /* QR foreground/background stay dark-on-white so external banking apps scan reliably. */
+  --color-qr-dark: #143642;
+
+  --color-green-soft: var(--c-green-soft);
+  --color-green-ink: var(--c-green-ink);
+  --color-yellow-soft: var(--c-yellow-soft);
+  --color-sky-soft: var(--c-sky-soft);
+  --color-ink: var(--c-ink);
+  --color-cream: var(--c-cream);
+  --color-sand: var(--c-sand);
+  --color-surface: var(--c-surface);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-edge: var(--c-edge);
+  --color-danger: var(--c-danger);
+  --color-danger-soft: var(--c-danger-soft);
+  --color-on-accent: var(--c-on-accent);
+  --color-on-yellow: var(--c-on-yellow);
+
+  --font-heading: "Baloo 2", system-ui, sans-serif;
+  --font-body: "Be Vietnam Pro", system-ui, sans-serif;
+
+  /* Navigation switches to vertical rail at medium viewports (`rail:` variant). */
+  --breakpoint-rail: 37.5rem;
+  /* SplitLayout displays two side-by-side panes from tablet/unfolded widths (`split:` variant). */
+  --breakpoint-split: 42rem;
+  /* Large phones allow movable bottom/edge dock placement. */
+  --breakpoint-phone-lg: 25rem;
+
+  --radius-card: 16px;
+  --radius-sheet: 22px;
+  --radius-pill: 999px;
+
+  --shadow-hard: 2px 3px 0 var(--color-edge);
+  --shadow-hard-sm: 1px 2px 0 var(--color-edge);
+  --shadow-lift: 4px 6px 0 var(--color-edge);
+}
+
+@utility ink-border {
+  border: 1.5px solid var(--color-edge);
+}
+
+@utility card-ink {
+  border: 1.5px solid var(--color-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hard);
+}
+
+@layer base {
+  html {
+    overscroll-behavior-y: contain;
+    /* Keep focused elements clear of the fixed navigation bar (WCAG 2.4.11). */
+    scroll-padding-bottom: calc(var(--nav-reserve-bottom, 4.5rem) + 1rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+}
