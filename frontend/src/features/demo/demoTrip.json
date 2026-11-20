@@ -1,0 +1,598 @@
+{
+  "trip": {
+    "id": "a15b0b2e-0110-4bab-bcf9-c1622aab809f",
+    "name": "Phu Quoc 3D2N",
+    "currency": "VND",
+    "starts_on": "2026-12-12",
+    "ends_on": "2026-12-14",
+    "fund_holder_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+    "locked": false,
+    "closed": false,
+    "me": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+    "members": [
+      {
+        "id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "display_name": "Alex",
+        "position": 0,
+        "removed": false
+      },
+      {
+        "id": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "display_name": "Ben",
+        "position": 1,
+        "removed": false
+      },
+      {
+        "id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "display_name": "Chloe",
+        "position": 2,
+        "removed": false
+      },
+      {
+        "id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "display_name": "David",
+        "position": 3,
+        "removed": false
+      }
+    ]
+  },
+  "days": [
+    {
+      "date": "2026-12-14",
+      "count": 3,
+      "total": 1030000
+    },
+    {
+      "date": "2026-12-13",
+      "count": 4,
+      "total": 3250000
+    },
+    {
+      "date": "2026-12-12",
+      "count": 4,
+      "total": 5820000
+    }
+  ],
+  "fund": {
+    "holder_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+    "contributed": 6000000,
+    "spent": 5780000,
+    "remaining": 220000,
+    "members": [
+      {
+        "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "contributed": 1500000
+      },
+      {
+        "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "contributed": 1500000
+      },
+      {
+        "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "contributed": 1500000
+      },
+      {
+        "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "contributed": 1500000
+      }
+    ],
+    "contributions": [
+      {
+        "id": "0edda6e7-4d50-4bef-8285-6b9ec7df0f2a",
+        "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "amount": 1500000,
+        "contributed_on": "2026-12-10",
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "created_at": "2026-11-17T02:58:11.334680Z"
+      },
+      {
+        "id": "ccf54163-036e-40b8-8c8d-17e81d6717e2",
+        "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "amount": 1500000,
+        "contributed_on": "2026-12-10",
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "created_at": "2026-11-17T02:58:11.312669Z"
+      },
+      {
+        "id": "fcd3a2e4-eed2-44cd-9693-bf0b1e0e0c04",
+        "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "amount": 1500000,
+        "contributed_on": "2026-12-10",
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "created_at": "2026-11-17T02:58:11.288672Z"
+      },
+      {
+        "id": "06723b56-324c-4fc5-913a-956d6a016c80",
+        "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "amount": 1500000,
+        "contributed_on": "2026-12-10",
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "created_at": "2026-11-17T02:58:11.261258Z"
+      }
+    ]
+  },
+  "expenses": {
+    "2026-12-14": [
+      {
+        "id": "e380f1f9-f74b-4eab-a59a-1dd68bf0e013",
+        "title": "Airport taxi",
+        "amount": 180000,
+        "category": "transport",
+        "spent_on": "2026-12-14",
+        "paid_by": null,
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 45000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 45000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 45000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 45000
+          }
+        ],
+        "note": null,
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.574403Z",
+        "updated_at": "2026-11-17T02:58:11.574403Z"
+      },
+      {
+        "id": "1823c6f3-a8fe-4f39-9500-48450873f3ca",
+        "title": "Fish sauce and pepper",
+        "amount": 650000,
+        "category": "shopping",
+        "spent_on": "2026-12-14",
+        "paid_by": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "split_mode": "exact",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 300000,
+            "amount": 300000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 150000,
+            "amount": 150000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 200000,
+            "amount": 200000
+          }
+        ],
+        "note": "Souvenirs for home",
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.554373Z",
+        "updated_at": "2026-11-17T02:58:11.554373Z"
+      },
+      {
+        "id": "0ca26930-2c5c-4bff-8c55-a698cf0e744c",
+        "title": "Fish cake noodle soup",
+        "amount": 200000,
+        "category": "food",
+        "spent_on": "2026-12-14",
+        "paid_by": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 50000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 50000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 50000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 50000
+          }
+        ],
+        "note": null,
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.534369Z",
+        "updated_at": "2026-11-17T02:58:11.534369Z"
+      }
+    ],
+    "2026-12-13": [
+      {
+        "id": "5aad8bf8-29c6-4ff0-8131-614ad5e4d2d6",
+        "title": "Scooter fuel",
+        "amount": 150000,
+        "category": "transport",
+        "spent_on": "2026-12-13",
+        "paid_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 37500
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 37500
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 37500
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 37500
+          }
+        ],
+        "note": null,
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.514850Z",
+        "updated_at": "2026-11-17T02:58:11.514850Z"
+      },
+      {
+        "id": "4e3c47f8-8f3a-406f-9195-afd1b63812fd",
+        "title": "Iced coffee",
+        "amount": 180000,
+        "category": "food",
+        "spent_on": "2026-12-13",
+        "paid_by": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 60000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 60000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 60000
+          }
+        ],
+        "note": "Chloe skipped coffee",
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.492517Z",
+        "updated_at": "2026-11-17T02:58:11.492517Z"
+      },
+      {
+        "id": "1845c636-5c1b-4513-84a6-157ceef40eb0",
+        "title": "Hon Thom cable car tickets",
+        "amount": 2400000,
+        "category": "activity",
+        "spent_on": "2026-12-13",
+        "paid_by": null,
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 600000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 600000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 600000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 600000
+          }
+        ],
+        "note": "4 tickets x 600,000",
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.467571Z",
+        "updated_at": "2026-11-17T02:58:11.467571Z"
+      },
+      {
+        "id": "946442ff-6cc1-403a-bcb3-03b9f4ba48a9",
+        "title": "Herring salad dinner",
+        "amount": 520000,
+        "category": "food",
+        "spent_on": "2026-12-13",
+        "paid_by": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "split_mode": "shares",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 104000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 104000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 104000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 2,
+            "amount": 208000
+          }
+        ],
+        "note": "David had double portions",
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.448902Z",
+        "updated_at": "2026-11-17T02:58:11.448902Z"
+      }
+    ],
+    "2026-12-12": [
+      {
+        "id": "e8b12c71-3824-4535-bf23-4a9e52232965",
+        "title": "Night market seafood",
+        "amount": 1480000,
+        "category": "food",
+        "spent_on": "2026-12-12",
+        "paid_by": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 370000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 370000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 370000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 370000
+          }
+        ],
+        "note": null,
+        "place": "Phu Quoc Night Market",
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.426811Z",
+        "updated_at": "2026-11-17T02:58:11.426811Z"
+      },
+      {
+        "id": "41e60e9c-e78b-43d7-810f-e6df2405ac2e",
+        "title": "Beachfront hotel (2 nights)",
+        "amount": 3200000,
+        "category": "lodging",
+        "spent_on": "2026-12-12",
+        "paid_by": null,
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 800000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 800000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 800000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 800000
+          }
+        ],
+        "note": "2 twin rooms near Duong Dong",
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.407554Z",
+        "updated_at": "2026-11-17T02:58:11.407554Z"
+      },
+      {
+        "id": "390f41b7-2b3e-405e-aca0-7ace337c1fb2",
+        "title": "3-day scooter rental",
+        "amount": 900000,
+        "category": "transport",
+        "spent_on": "2026-12-12",
+        "paid_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 225000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 225000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 225000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 225000
+          }
+        ],
+        "note": "3 bikes, paid daily",
+        "place": null,
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.385096Z",
+        "updated_at": "2026-11-17T02:58:11.385096Z"
+      },
+      {
+        "id": "4c18125d-aacc-4e02-b06e-d8ebde4d9114",
+        "title": "Kien Xay stir-noodle soup",
+        "amount": 240000,
+        "category": "food",
+        "spent_on": "2026-12-12",
+        "paid_by": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "split_mode": "equal",
+        "shares": [
+          {
+            "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+            "weight": 1,
+            "amount": 60000
+          },
+          {
+            "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+            "weight": 1,
+            "amount": 60000
+          },
+          {
+            "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+            "weight": 1,
+            "amount": 60000
+          },
+          {
+            "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+            "weight": 1,
+            "amount": 60000
+          }
+        ],
+        "note": null,
+        "place": "Kien Xay Noodle House, Phu Quoc",
+        "created_by": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "updated_by": null,
+        "version": 1,
+        "created_at": "2026-11-17T02:58:11.361056Z",
+        "updated_at": "2026-11-17T02:58:11.361056Z"
+      }
+    ]
+  },
+  "balances": {
+    "currency": "VND",
+    "fund": {
+      "holder_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+      "remaining": 220000
+    },
+    "members": [
+      {
+        "member_id": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "paid": 1050000,
+        "contributed": 1500000,
+        "share": 2651500,
+        "sent": 0,
+        "received": 0,
+        "net": -321500,
+        "removed": false
+      },
+      {
+        "member_id": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "paid": 760000,
+        "contributed": 1500000,
+        "share": 2501500,
+        "sent": 0,
+        "received": 0,
+        "net": -241500,
+        "removed": false
+      },
+      {
+        "member_id": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "paid": 1680000,
+        "contributed": 1500000,
+        "share": 2291500,
+        "sent": 0,
+        "received": 0,
+        "net": 888500,
+        "removed": false
+      },
+      {
+        "member_id": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "paid": 830000,
+        "contributed": 1500000,
+        "share": 2655500,
+        "sent": 0,
+        "received": 0,
+        "net": -325500,
+        "removed": false
+      }
+    ],
+    "transfers": [
+      {
+        "payer": "0a8cf0d8-0e3b-4399-be7a-ea1e0b9a6208",
+        "payee": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "amount": 325500
+      },
+      {
+        "payer": "a4876d64-9cb1-49e7-a8d3-0e8aa83e944a",
+        "payee": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "amount": 321500
+      },
+      {
+        "payer": "3be31792-75b7-425d-9acf-1385f29f913e",
+        "payee": "4f2ce52f-95d8-400e-b745-be10c43f9609",
+        "amount": 241500
+      }
+    ]
+  },
+  "payments": [],
+  "accounts": []
+}

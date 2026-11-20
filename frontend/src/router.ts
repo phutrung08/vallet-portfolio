@@ -4,7 +4,29 @@ import HomeView from '@/features/trips/HomeView.vue'
 import { restoreRememberedPane } from '@/features/trips/paneMemory'
 
 export const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'home', component: HomeView },
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    beforeEnter: () => (import.meta.env.VITE_DEMO_ONLY === 'true' ? { name: 'demo', replace: true } : true),
+  },
+  {
+    path: '/demo',
+    component: () => import('@/features/demo/DemoLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'demo',
+        component: () => import('@/features/trips/TripView.vue'),
+        beforeEnter: restoreRememberedPane,
+      },
+      {
+        path: 'balances',
+        name: 'demo-balances',
+        component: () => import('@/features/balances/BalancesView.vue'),
+      },
+    ],
+  },
   {
     path: '/trips/new',
     name: 'create-trip',
