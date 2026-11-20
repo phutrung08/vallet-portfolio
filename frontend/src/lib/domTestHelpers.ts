@@ -1,7 +1,8 @@
 import { flushPromises } from '@vue/test-utils'
 
-/** Active teleported modal dialog element in document.body. */
-export const dialog = () => document.body.querySelector<HTMLElement>('dialog[open], [role="dialog"]')
+/** Topmost active teleported modal dialog element in document.body. */
+export const dialog = () =>
+  [...document.body.querySelectorAll<HTMLElement>('dialog[open], [role="dialog"]')].at(-1) ?? null
 
 /** First button whose trimmed text matches ``label``. */
 export const button = (root: ParentNode | null | undefined, label: string) =>
