@@ -44,7 +44,7 @@ Full threat model and controls are documented in [`docs/SECURITY.md`](docs/SECUR
 
 | Layer | Tooling | Verified Coverage |
 |---|---|---|
-| **Backend** | `ruff`, `mypy --strict`, `pytest` + PostgreSQL 18 | **1,527 passed** (domain, API, authz isolation, AST boundaries, log hygiene, concurrency, DB constraints, migrations) |
+| **Backend** | `ruff`, `mypy --strict`, `pytest` + PostgreSQL 18 | **1,539 passed** (domain, API, authz isolation, AST boundaries, log hygiene, concurrency, DB constraints, migrations) |
 | **Frontend** | `eslint --max-warnings 0`, `vue-tsc`, `vitest`, `vite build` | **887 passed across 78 test files** (0 ESLint warnings, strict TypeScript, Workbox SW build) |
 | **End-to-End & A11y** | Selenium WebDriver + headless Chrome + `axe-core` | **11 passed** (full trip & join/settle flows, nav drag, **36 device profiles / 33 unique viewports**, **13-screen WCAG 2.1 Level A & AA audit**) |
 | **Supply Chain & CI** | GitHub Actions (`ci.yml`, `security.yml`) | `gitleaks`, `pip-audit` (hash-pinned lockfiles), `npm audit --omit=dev`, OSI/font license allowlist |
@@ -86,7 +86,31 @@ The application is served at `http://localhost:8080` behind Nginx (proxying `/ap
    ```
    Open `http://localhost:5173`. Vite proxies `/api/*` to `http://127.0.0.1:8000`.
 
-### Option 3: Static Portfolio Demo Build (No Backend)
+### Option 3: Vercel Fullstack + Neon PostgreSQL (Free Tier)
+
+Root [`vercel.json`](vercel.json) builds the Vite SPA (`frontend/dist`) and mounts the FastAPI backend as a same-origin Vercel Python Serverless Function at [`api/index.py`](api/index.py) using pinned runtime dependencies from [`requirements.txt`](requirements.txt).
+
+1. **Import repo in Vercel:** Keep Root Directory at `./` and choose Application Preset `Other` (`vercel.json` sets `"framework": null` and configures rewrites/headers automatically).
+2. **Connect PostgreSQL:** Attach a free **Neon** database (via Vercel Storage Marketplace or `neon.tech`) exposing `DATABASE_URL` / `POSTGRES_URL`, or set `VALLET_DATABASE_URL` directly. Both pooled (`-pooler`) and direct Neon URLs (`postgresql://...?sslmode=require&channel_binding=require`) are normalized automatically for `asyncpg` + `NullPool`.
+3. **Add required secrets in Vercel Environment Variables:**
+   ```bash
+   # Generate two distinct secrets (keep private; never commit):
+   python -c "import secrets; print(secrets.token_urlsafe(48))"  # -> VALLET_SHARE_LINK_KEY
+   python -c "import secrets; print(secrets.token_urlsafe(32))"  # -> VALLET_BANK_DATA_KEY (32 bytes base64url)
+   ```
+   *(If you attach a custom domain outside Vercel's `VERCEL_*` hostnames, set `VALLET_ALLOWED_ORIGINS='["https://your-domain.com"]'` as well.)*
+4. **Apply database schema once:** Run migrations locally against your Neon connection string:
+   ```bash
+   cd backend
+   VALLET_ENVIRONMENT=development VALLET_DATABASE_URL="postgresql://..." alembic upgrade head
+   ```
+   On Windows PowerShell:
+   ```powershell
+   cd backend
+   $env:VALLET_ENVIRONMENT='development'; $env:VALLET_DATABASE_URL='postgresql://...'; .venv\Scripts\alembic.exe upgrade head
+   ```
+
+### Option 4: Static Portfolio Demo Build (No Backend)
 
 ```bash
 cd frontend
@@ -94,7 +118,7 @@ npm ci
 VITE_DEMO_ONLY=true npm run build
 ```
 
-Root `vercel.json` configures static `/demo` builds on Vercel with SPA rewrites and security headers matching [`infra/nginx.conf`](infra/nginx.conf).
+Setting `VITE_DEMO_ONLY=true` in Vercel Environment Variables switches any deployment into the read-only standalone `/demo` mode with zero database or backend calls. Frontend headers match [`infra/nginx.conf`](infra/nginx.conf).
 
 ## Running Tests
 

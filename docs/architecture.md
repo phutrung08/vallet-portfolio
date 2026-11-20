@@ -7,19 +7,19 @@ Vallet is a mobile-first Progressive Web App (PWA) for splitting group travel ex
 ```text
 Browser / Installed PWA (Vue 3 + Workbox)
   │
-  ├─► Same-origin Nginx / Vite Proxy (/) ────► Static SPA bundle + precached assets
-  │                                               └─ Security headers (CSP, Referrer-Policy, nosniff)
+  ├─► Same-origin Edge (Nginx / Vercel / Vite) ────► Static SPA bundle + precached assets
+  │                                                    └─ Frontend CSP & security headers
   │
-  └─► Same-origin API (/api/*) ──────────────► FastAPI ASGI app
-                                                  ├─ Security & Edge Middleware
-                                                  │   (SecurityHeaders -> RateLimit -> BodyLimit -> Csrf)
-                                                  ├─ Routers (app/api/*)
-                                                  ├─ Services (app/services/*)
-                                                  ├─ Pure Domain (app/domain/*)
-                                                  └─ Repositories & ORM (app/repositories/*) ──► PostgreSQL 18
+  └─► Same-origin API (/api/*) ────────────────────► FastAPI ASGI app (uvicorn or Vercel api/index.py)
+                                                       ├─ Edge Middleware
+                                                       │   ([StripPrefix] -> SecurityHeaders -> RateLimit -> BodyLimit -> Csrf)
+                                                       ├─ Routers (app/api/*)
+                                                       ├─ Services (app/services/*)
+                                                       ├─ Pure Domain (app/domain/*)
+                                                       └─ Repositories & ORM (app/repositories/*) ──► PostgreSQL 18 / Neon
 ```
 
-An optional standalone portfolio demo mode builds the frontend with `VITE_DEMO_ONLY=true` and routes all reads to an in-browser fixture (`frontend/src/features/demo/demoSource.ts`) with no backend required.
+Vallet supports both containerized Nginx + Uvicorn hosting (`infra/nginx.conf` + `docker-compose.yml`), single-project fullstack Vercel hosting (`vercel.json` + `api/index.py` + `StripPrefixMiddleware`), and an optional standalone portfolio demo mode built with `VITE_DEMO_ONLY=true` (`frontend/src/features/demo/demoSource.ts`) with no backend required.
 
 ## Backend Modular Monolith (`backend/app`)
 
@@ -64,8 +64,9 @@ Multi-user writes on shared trips coordinate cleanly through PostgreSQL row lock
 
 ### Edge & Persistence
 
-- **ASGI middleware stack (`app/main.py`):** Ordered outermost-to-innermost as `SecurityHeadersMiddleware` -> `RateLimitMiddleware` -> `BodyLimitMiddleware` -> `CsrfMiddleware`, ensuring even rejected requests (413, 429, 403, 500) receive strict security headers.
-- **Database schema (`alembic` / `migrations/`):** Foreign keys use `DEFERRABLE` constraints on member references (`get_db` maps commit `IntegrityError` to HTTP `409`) and indexed SHA-256 hashes for device sessions and trip share links.
+- **ASGI middleware stack (`app/main.py`):** Ordered outermost-to-innermost as optional `StripPrefixMiddleware` (`app/api/prefix.py`, used by Vercel `api/index.py`) -> `SecurityHeadersMiddleware` -> `RateLimitMiddleware` -> `BodyLimitMiddleware` -> `CsrfMiddleware`, ensuring `/api/*` rewrites and even rejected requests (413, 429, 403, 500) receive strict security headers.
+- **Database schema & pooling (`app/core/db.py`, `app/core/config.py`, `migrations/env.py`):** Foreign keys use `DEFERRABLE` constraints on member references (`get_db` maps commit `IntegrityError` to HTTP `409`) and indexed SHA-256 hashes for device sessions and share links. `normalize_asyncpg_url()` adapts `postgres://` / `postgresql://`, `sslmode`, and `channel_binding` query params cleanly for `asyncpg`; setting `VALLET_DB_NULL_POOL=true` (enabled automatically by `configure_vercel_env()` in `api/index.py`) uses `NullPool` with prepared statement caches disabled for PgBouncer / Neon `-pooler` compatibility.
+- **Edge header scoping (`vercel.json`, `infra/nginx.conf`):** Vercel rewrites `/api` and `/api/*` to `api/index.py` before the SPA `/index.html` fallback and excludes `/api` paths from static HTML CSP headers so API responses keep FastAPI's `default-src 'none'` policy.
 
 ## Frontend Architecture (`frontend/src`)
 
