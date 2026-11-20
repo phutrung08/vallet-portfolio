@@ -3,13 +3,27 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
+import vueI18n from '@intlify/unplugin-vue-i18n/vite'
 
 const { version } = JSON.parse(
   readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
 ) as { version: string }
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss()],
+  plugins: [
+    vue(),
+    tailwindcss(),
+    vueI18n({
+      include: [fileURLToPath(new URL('./src/locales/**', import.meta.url))],
+      // Messages are precompiled at build time so runtime builds ship without the compiler.
+      runtimeOnly: true,
+      dropMessageCompiler: true,
+      compositionOnly: true,
+      fullInstall: false,
+      strictMessage: true,
+      escapeHtml: false,
+    }),
+  ],
   define: {
     __INTLIFY_PROD_DEVTOOLS__: false,
     'import.meta.env.PACKAGE_VERSION': JSON.stringify(version),

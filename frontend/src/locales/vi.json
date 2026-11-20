@@ -1,0 +1,557 @@
+{
+  "app": {
+    "name": "Vallet",
+    "tagline": "Đi cùng nhau, chia sòng phẳng"
+  },
+  "demo": {
+    "banner": "Đây là chuyến mẫu, không lưu gì cả.",
+    "create": "Tạo chuyến"
+  },
+  "home": {
+    "benefits": {
+      "log": "Ghi khoản chi ngay trong lúc đi",
+      "share": "Gửi link, cả nhóm cùng ghi",
+      "settle": "Cuối chuyến biết ai trả ai, quét QR là xong"
+    },
+    "createTrip": "Tạo chuyến đi",
+    "freeNote": "Miễn phí · không cần đăng ký",
+    "haveInvite": "Tôi có link mời",
+    "noTrips": "Chưa có chuyến đi nào.",
+    "overview": {
+      "open": "Mở chuyến đi",
+      "recent": "Khoản chi gần đây",
+      "noExpenses": "Chưa có khoản chi nào."
+    },
+    "viewSample": "Xem chuyến mẫu",
+    "yourTrips": "Chuyến đi của bạn"
+  },
+  "nav": {
+    "expenses": "Chi tiêu",
+    "balances": "Số dư",
+    "add": "Thêm khoản chi",
+    "members": "Thành viên",
+    "settings": "Cài đặt",
+    "moved": {
+      "bottom-left": "Đã chuyển thanh điều hướng xuống góc dưới bên trái",
+      "bottom-center": "Đã chuyển thanh điều hướng xuống giữa phía dưới",
+      "bottom-right": "Đã chuyển thanh điều hướng xuống góc dưới bên phải",
+      "edge-left": "Đã chuyển thanh điều hướng sang mép trái",
+      "edge-right": "Đã chuyển thanh điều hướng sang mép phải",
+      "rail-left": "Đã chuyển thanh điều hướng sang bên trái",
+      "rail-right": "Đã chuyển thanh điều hướng sang bên phải"
+    }
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "home": "Về trang chính"
+  },
+  "common": {
+    "loading": "Đang tải…",
+    "retry": "Thử lại",
+    "cancel": "Hủy",
+    "refresh": "Làm mới",
+    "refreshing": "Đang làm mới…",
+    "today": "hôm nay",
+    "yesterday": "hôm qua"
+  },
+  "offline": {
+    "banner": "Đang ngoại tuyến · đang xem bản đã lưu",
+    "updatedAt": "Cập nhật lúc {time}",
+    "savedCopy": "Đang xem bản đã lưu"
+  },
+  "pwa": {
+    "updateAvailable": "Có bản mới",
+    "reload": "Tải lại",
+    "later": "Để sau"
+  },
+  "errors": {
+    "network_error": "Không có mạng. Thử lại nhé.",
+    "offline": "Bạn đang ngoại tuyến. Kết nối mạng rồi thử lại.",
+    "timeout": "Mạng chậm quá. Thử lại nhé.",
+    "rate_limited": "Bạn thao tác hơi nhanh. Đợi một chút rồi thử lại nhé.",
+    "payload_too_large": "Dữ liệu gửi lên quá lớn.",
+    "unauthenticated": "Phiên thiết bị đã hết hạn. Tải lại trang rồi thử nhé.",
+    "validation_error": "Thông tin chưa hợp lệ. Kiểm tra lại nhé.",
+    "not_found": "Không tìm thấy chuyến đi này.",
+    "trip_locked": "Chuyến đi đang khóa, chỉ xem được.",
+    "trip_closed": "Chuyến đi đã chốt, không sửa được nữa.",
+    "csrf_rejected": "Phiên làm việc bị lỗi. Tải lại trang rồi thử nhé.",
+    "member_not_active": "Có người trong thao tác này đã rời chuyến đi. Tải lại rồi thử nhé.",
+    "member_already_joined": "Thành viên này đã tham gia trên thiết bị khác.",
+    "no_fund": "Chuyến đi này không dùng quỹ chung.",
+    "fund_in_use": "Quỹ đã có khoản đóng hoặc khoản chi từ quỹ nên chưa tắt được.",
+    "name_taken": "Đã có người tên này trong chuyến đi.",
+    "trip_full": "Chuyến đi đã đủ người.",
+    "member_is_fund_holder": "Người này đang giữ quỹ. Đổi thủ quỹ trước nhé.",
+    "last_member": "Không gỡ được người cuối cùng trong chuyến đi.",
+    "invalid_split": "Cách chia chưa khớp với số tiền.",
+    "trip_limit_reached": "Chuyến đi đã chạm giới hạn số bản ghi.",
+    "device_trip_limit_reached": "Thiết bị này đã đạt giới hạn số chuyến đi.",
+    "idempotency_conflict": "Yêu cầu trước có thể đã được lưu. Kiểm tra lại danh sách nhé.",
+    "version_conflict": "Có người vừa sửa khoản chi này. Tải bản mới nhất rồi thử lại nhé.",
+    "currency_not_supported": "Mã QR VietQR chỉ hỗ trợ chuyến đi dùng tiền VND.",
+    "no_bank_account": "Thành viên này chưa thêm tài khoản nhận tiền.",
+    "generic": "Có lỗi xảy ra. Thử lại nhé."
+  },
+  "trips": {
+    "members": "{n} người",
+    "status": {
+      "closed": "Đã chốt",
+      "upcoming": "Sắp tới",
+      "ongoing": "Đang đi"
+    }
+  },
+  "trip": {
+    "back": "Quay lại",
+    "share": "Chia sẻ chuyến đi",
+    "locked": "Đã khóa",
+    "fundRemaining": "Quỹ còn lại",
+    "fundNegative": "Quỹ đang âm",
+    "fundLink": "Quỹ chung",
+    "spentLabel": "Đã tiêu",
+    "contributed": "Đã góp {amount}",
+    "spent": "Đã chi {amount}",
+    "progress": "Đã chi {percent}% quỹ",
+    "days": "Các ngày",
+    "dayNumber": "Ngày {n}",
+    "expenseCount": "{n} khoản",
+    "emptyTitle": "Chưa có khoản chi nào",
+    "pickExpense": "Chọn một khoản chi để xem chi tiết",
+    "noExpenseYet": "Chưa có khoản chi nào. Bấm + để thêm khoản đầu tiên",
+    "pane": {
+      "label": "Ngăn bên phải",
+      "details": "Chi tiết",
+      "add": "Thêm",
+      "stats": "Thống kê"
+    }
+  },
+  "createTrip": {
+    "title": "Tạo chuyến đi",
+    "name": "Tên chuyến đi",
+    "namePlaceholder": "Phú Quốc tháng 11",
+    "startsOn": "Ngày đi",
+    "endsOn": "Ngày về",
+    "fund": "Dùng quỹ chung",
+    "fundHelp": "Mọi người góp trước vào một quỹ, một người giữ",
+    "fundHolder": "Bạn sẽ giữ quỹ, có thể đổi sau",
+    "currency": "Tiền tệ",
+    "yourName": "Tên của bạn",
+    "others": "Thành viên khác",
+    "othersPlaceholder": "Tên một người",
+    "add": "Thêm",
+    "remove": "Xóa {name}",
+    "counter": "{n}/{max}",
+    "submit": "Tạo chuyến đi",
+    "submitting": "Đang tạo…",
+    "errors": {
+      "nameRequired": "Nhập tên chuyến đi nhé",
+      "nameTooLong": "Tên chuyến đi tối đa 80 ký tự",
+      "personRequired": "Nhập tên nhé",
+      "personTooLong": "Tên tối đa 40 ký tự",
+      "duplicate": "Đã có người tên này",
+      "tooMany": "Tối đa 49 người khác",
+      "endBeforeStart": "Ngày về không được trước ngày đi",
+      "invalid": "Thông tin này chưa hợp lệ"
+    }
+  },
+  "expense": {
+    "fundName": "Quỹ chung",
+    "subtitle": "{name} trả · {x}/{y} người",
+    "perPerson": "{amount}/người · {mode}",
+    "unevenSplit": "Chia không đều · {min}–{max}",
+    "excluded": "Miễn: {names}",
+    "andMore": "{names} và {n} người nữa",
+    "split": {
+      "equal": "chia đều",
+      "shares": "chia theo phần",
+      "percent": "chia theo %",
+      "exact": "chia theo số tiền"
+    },
+    "details": "Chi tiết",
+    "edit": "Sửa khoản chi",
+    "delete": "Xóa khoản chi",
+    "deleteTitle": "Xóa khoản chi này?",
+    "deleteBody": "Không thể hoàn tác.",
+    "deleteConfirm": "Xóa",
+    "notFound": "Không tìm thấy khoản chi này.",
+    "shareCount": "{n} phần",
+    "createdBy": "Ghi bởi {name}",
+    "editedBy": "Sửa lần cuối bởi {name}"
+  },
+  "expenseForm": {
+    "close": "Đóng",
+    "amount": "Số tiền",
+    "title": "Tên khoản chi",
+    "titlePlaceholder": "Bún bò, taxi, vé…",
+    "date": "Ngày",
+    "category": "Hạng mục",
+    "categories": {
+      "food": "Ăn uống",
+      "transport": "Đi lại",
+      "lodging": "Chỗ ở",
+      "activity": "Vui chơi",
+      "shopping": "Mua sắm",
+      "other": "Khác"
+    },
+    "payer": "Người trả",
+    "payerSheet": "Ai đã trả?",
+    "you": "{name} (bạn)",
+    "splitAmong": "Chia cho {n} người",
+    "save": "Lưu khoản chi",
+    "saving": "Đang lưu…",
+    "errors": {
+      "amountRequired": "Nhập số tiền nhé",
+      "amountTooLarge": "Số tiền lớn quá",
+      "titleRequired": "Nhập tên khoản chi nhé",
+      "titleTooLong": "Tên tối đa 120 ký tự",
+      "dateRequired": "Chọn ngày nhé",
+      "invalid": "Thông tin này chưa hợp lệ",
+      "missing": "Còn thiếu {amount}",
+      "excess": "Thừa {amount}",
+      "noParticipants": "Chọn ít nhất một người nhé",
+      "sharesZero": "Cần ít nhất một người có phần",
+      "noteTooLong": "Ghi chú tối đa 500 ký tự",
+      "placeTooLong": "Địa điểm tối đa 200 ký tự"
+    },
+    "mode": "Cách chia",
+    "modes": {
+      "equal": "Đều",
+      "shares": "Phần",
+      "percent": "%",
+      "exact": "Số tiền"
+    },
+    "out": "Vắng",
+    "hint": "Chạm vào ai để bỏ hoặc thêm người đó",
+    "fewerShares": "Bớt một phần của {name}",
+    "moreShares": "Thêm một phần cho {name}",
+    "percentOf": "Phần trăm của {name}",
+    "amountOf": "Số tiền của {name}",
+    "total": "Tổng {total} / {target}",
+    "moreFields": "Thêm ghi chú / địa điểm",
+    "note": "Ghi chú",
+    "place": "Địa điểm",
+    "placePlaceholder": "Quán, khu phố, địa chỉ…",
+    "left": "{name} (đã rời)",
+    "leftTag": "đã rời",
+    "conflict": "Khoản chi này vừa được người khác sửa",
+    "loadLatest": "Tải bản mới nhất",
+    "discardTitle": "Bỏ những gì bạn vừa sửa?",
+    "discardBody": "Bản mới nhất sẽ thay cho những gì bạn đang sửa trên màn hình này."
+  },
+  "fund": {
+    "title": "Quỹ chung",
+    "remaining": "Còn trong quỹ",
+    "holder": "Thủ quỹ: {name}",
+    "paidTitle": "Đã đóng",
+    "notPaid": "Chưa đóng",
+    "historyTitle": "Lịch sử đóng quỹ",
+    "historyEmpty": "Chưa có khoản đóng nào",
+    "note": "Thiếu quỹ thì ai cũng có thể ứng tiền riêng; phần ứng được tính vào quyết toán.",
+    "add": "Ghi nhận đóng quỹ",
+    "who": "Ai đóng?",
+    "amount": "Số tiền đóng",
+    "date": "Ngày đóng",
+    "save": "Lưu",
+    "saving": "Đang lưu…",
+    "changeHolder": "Đổi thủ quỹ",
+    "holderSheet": "Ai giữ quỹ?",
+    "turnOff": "Tắt quỹ chung",
+    "turnOffTitle": "Tắt quỹ chung?",
+    "turnOffBody": "Chuyến đi sẽ không dùng quỹ nữa. Bật lại được bất cứ lúc nào.",
+    "turnOffConfirm": "Tắt quỹ",
+    "turnOn": "Bật quỹ chung",
+    "emptyTitle": "Chuyến đi này chưa dùng quỹ chung",
+    "emptyBody": "Mọi người góp trước vào một quỹ, một người giữ, rồi chi từ quỹ.",
+    "deleteTitle": "Xóa khoản đóng này?",
+    "deleteBody": "Số tiền sẽ bị trừ khỏi quỹ.",
+    "deleteConfirm": "Xóa",
+    "deleteLabel": "Xóa khoản đóng của {name}",
+    "errors": {
+      "amountRequired": "Nhập số tiền nhé",
+      "amountTooLarge": "Số tiền lớn quá",
+      "dateRequired": "Chọn ngày nhé"
+    }
+  },
+  "balances": {
+    "title": "Số dư",
+    "left": "đã rời",
+    "pays": "chuyển cho",
+    "tabs": {
+      "label": "Cách xem số dư",
+      "transfers": "Ai trả ai",
+      "members": "Từng người"
+    },
+    "me": {
+      "receive": "Bạn được nhận lại",
+      "pay": "Bạn cần trả",
+      "settled": "Bạn đã xong",
+      "detail": "Đã ứng {paid} · phần của bạn {share}"
+    },
+    "pane": {
+      "readOnly": "Chuyến này chỉ để xem, không ghi nhận chuyển khoản được."
+    },
+    "transfersTitle": "Ai trả ai",
+    "transferCount": "{n} lần chuyển",
+    "empty": "Mọi người đã sòng phẳng",
+    "frontedCaption": "Đã ứng ra / phần phải chịu",
+    "differenceCaption": "Chênh lệch",
+    "sent": "đã chuyển {amount}",
+    "received": "đã nhận {amount}",
+    "coverage": "Đã ứng {paid} trên phần phải chịu {share}",
+    "myAccount": "Tài khoản nhận tiền của bạn",
+    "myAccountEmpty": "Chưa thêm",
+    "qr": {
+      "button": "QR",
+      "open": "Mã QR: {payer} chuyển cho {payee}",
+      "title": "{payer} chuyển cho {payee}",
+      "amount": "Số tiền chuyển",
+      "label": "Mã QR chuyển khoản",
+      "bank": "Ngân hàng",
+      "holder": "Tên người nhận",
+      "message": "Nội dung chuyển khoản",
+      "last4": "•••• {last4}",
+      "hint": "Mở app ngân hàng, quét mã, kiểm tra tên người nhận rồi chuyển",
+      "copy": "Sao chép số tiền",
+      "copied": "Đã sao chép",
+      "copyFailed": "Không sao chép được số tiền.",
+      "noAccount": "{name} chưa thêm tài khoản ngân hàng",
+      "addAccount": "Thêm tài khoản của tôi",
+      "unsupported": "Mã QR chỉ dùng được cho chuyến đi tính bằng VND. Hãy chuyển bằng cách khác rồi ghi nhận ở đây.",
+      "done": "Tôi đã chuyển",
+      "recording": "Đang ghi nhận…",
+      "errors": {
+        "amountRequired": "Nhập số tiền nhé",
+        "amountTooLarge": "Tối đa {max}"
+      },
+      "accountChanged": "{name} vừa đổi tài khoản nhận lúc {time} {day}",
+      "accountChangedHint": "Hỏi lại {name} trước khi chuyển nếu bạn thấy lạ."
+    },
+    "paidTitle": "Đã trả",
+    "deleteLabel": "Xóa lần chuyển của {payer} cho {payee}",
+    "deleteTitle": "Xóa lần chuyển này?",
+    "deleteBody": "Số dư sẽ được tính lại như chưa chuyển.",
+    "deleteConfirm": "Xóa",
+    "close": {
+      "label": "Chốt chuyến đi",
+      "title": "Chốt chuyến đi?",
+      "body": "Sau khi chốt, không thêm được khoản chi mới. Vẫn ghi nhận được các lần chuyển tiền, và mở lại được bất cứ lúc nào.",
+      "confirm": "Chốt"
+    },
+    "reopen": {
+      "label": "Mở lại chuyến đi",
+      "title": "Mở lại chuyến đi?",
+      "body": "Mọi người lại thêm và sửa được khoản chi.",
+      "confirm": "Mở lại"
+    }
+  },
+  "stats": {
+    "paidBy": "Ai đã trả bao nhiêu",
+    "share": "Phần phải chịu {amount}"
+  },
+  "summary": {
+    "title": "Tổng kết chuyến",
+    "link": "Tổng kết chuyến",
+    "total": "Tổng đã chi",
+    "expenseCount": "{n} khoản chi",
+    "byCategory": "Theo hạng mục",
+    "percent": "{n}%",
+    "perPerson": "Mỗi người",
+    "approx": "~{amount}",
+    "perDay": "Mỗi ngày"
+  },
+  "bank": {
+    "title": "Tài khoản nhận tiền",
+    "current": "Đang dùng: {bank} •••• {last4}",
+    "search": "Tìm ngân hàng",
+    "bankLabel": "Ngân hàng",
+    "noMatch": "Không thấy ngân hàng nào",
+    "number": "Số tài khoản",
+    "name": "Tên chủ tài khoản",
+    "printed": "Sẽ in là: {name}",
+    "save": "Lưu",
+    "saving": "Đang lưu…",
+    "remove": "Gỡ tài khoản",
+    "removeTitle": "Gỡ tài khoản nhận tiền?",
+    "removeBody": "Mọi người sẽ không quét QR để chuyển tiền cho bạn được nữa.",
+    "removeConfirm": "Gỡ",
+    "errors": {
+      "bankRequired": "Chọn ngân hàng nhé",
+      "numberInvalid": "Số tài khoản gồm 6 đến 19 chữ số",
+      "nameInvalid": "Tên chỉ gồm chữ cái và dấu cách, tối đa 50 ký tự"
+    }
+  },
+  "members": {
+    "title": "Thành viên",
+    "invite": {
+      "title": "Mời vào chuyến đi",
+      "body": "Ai có link đều xem và thêm khoản chi được, không cần tài khoản.",
+      "copy": "Sao chép",
+      "copied": "Đã sao chép",
+      "copyFailed": "Không sao chép được. Thử Chia sẻ hoặc QR nhé.",
+      "share": "Chia sẻ",
+      "shareText": "Vào chuyến đi {name} cùng mình trên Vallet",
+      "qr": "QR",
+      "qrTitle": "Quét để vào chuyến đi",
+      "qrLabel": "Mã QR của link mời"
+    },
+    "detail": {
+      "back": "Lời mời và bảo mật",
+      "fronted": "Đã ứng",
+      "share": "Phần phải chịu",
+      "net": "Chênh lệch",
+      "bank": "Tài khoản nhận tiền",
+      "noBank": "Chưa thêm"
+    },
+    "listTitle": "Mọi người trong chuyến đi",
+    "you": "Bạn",
+    "holder": "Thủ quỹ",
+    "renameOf": "Đổi tên {name}",
+    "renameTitle": "Đổi tên",
+    "renameLabel": "Tên mới",
+    "renameSave": "Lưu",
+    "removeOf": "Gỡ {name} khỏi chuyến",
+    "removeTitle": "Gỡ {name} khỏi chuyến đi?",
+    "removeBody": "Người này không còn trong danh sách chia mới. Các khoản chi đã ghi vẫn được giữ.",
+    "removeConfirm": "Gỡ",
+    "addLabel": "Thêm người",
+    "addPlaceholder": "Tên một người",
+    "addButton": "Thêm",
+    "errors": {
+      "required": "Nhập tên nhé",
+      "tooLong": "Tên tối đa 40 ký tự",
+      "duplicate": "Đã có người tên này"
+    },
+    "security": {
+      "title": "Bảo mật link",
+      "rotate": {
+        "label": "Đổi link mời",
+        "title": "Đổi link mời?",
+        "body": "Link cũ sẽ không dùng được cho người mới. Người đã vào chuyến đi vẫn giữ quyền truy cập.",
+        "confirm": "Đổi link"
+      },
+      "lock": {
+        "label": "Khóa chuyến đi",
+        "title": "Khóa chuyến đi?",
+        "body": "Khi khóa, không ai thêm hay sửa được gì, kể cả người mới vào bằng link. Mở khóa được bất cứ lúc nào.",
+        "confirm": "Khóa"
+      },
+      "unlock": {
+        "label": "Mở khóa",
+        "title": "Mở khóa chuyến đi?",
+        "body": "Mọi người lại thêm và sửa được khoản chi.",
+        "confirm": "Mở khóa"
+      },
+      "leave": {
+        "label": "Rời chuyến đi trên máy này",
+        "title": "Rời chuyến đi trên máy này?",
+        "body": "Máy này sẽ không mở được chuyến đi nữa. Tên bạn vẫn còn trong danh sách; muốn vào lại, dùng link mời và chọn đúng tên.",
+        "confirm": "Rời"
+      }
+    },
+    "activity": "Hoạt động"
+  },
+  "join": {
+    "invited": "Bạn được mời vào chuyến",
+    "alreadyJoined": "Bạn đã vào chuyến đi này rồi.",
+    "openTrip": "Mở chuyến đi",
+    "whoAreYou": "Bạn là ai?",
+    "alreadyIn": "đã vào",
+    "newPerson": "Người mới",
+    "yourName": "Tên của bạn",
+    "submit": "Vào chuyến đi",
+    "caption": "Không cần đăng ký. Chọn tên là dùng được ngay.",
+    "locked": "Chuyến đi đang khóa, chưa vào được lúc này.",
+    "goneTitle": "Link không còn hiệu lực",
+    "goneBody": "Link này đã cũ hoặc chưa đầy đủ. Hãy xin người trong nhóm gửi lại link mới.",
+    "pasteTitle": "Dán link mời",
+    "pasteBody": "Mở link mời trọn vẹn, hoặc dán nó vào đây để tiếp tục.",
+    "pasteLabel": "Link mời",
+    "pastePlaceholder": "https://…/join#…",
+    "pasteContinue": "Tiếp tục",
+    "pasteInvalid": "Link này chưa đúng. Dán cả link, gồm phần sau dấu #."
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "back": "Quay lại",
+    "device": {
+      "title": "Thiết bị này",
+      "body": "Chuyến đi của bạn được gắn với trình duyệt này. Xóa dữ liệu trình duyệt sẽ mất quyền truy cập, trừ khi bạn mở lại link mời.",
+      "offline": "Một bản sao các chuyến đi được giữ trên máy này để xem khi không có mạng."
+    },
+    "language": {
+      "label": "Ngôn ngữ",
+      "en": "English",
+      "vi": "Tiếng Việt"
+    },
+    "theme": {
+      "label": "Giao diện",
+      "system": "Theo hệ thống",
+      "light": "Sáng",
+      "dark": "Tối"
+    },
+    "navPlacement": {
+      "title": "Thanh điều hướng",
+      "small": "Màn hình này nhỏ nên thanh điều hướng luôn ở giữa phía dưới.",
+      "phoneTitle": "Trên điện thoại lớn",
+      "wideTitle": "Trên màn hình rộng",
+      "bottomGroup": "Ở dưới màn hình",
+      "edgeGroup": "Dọc theo mép màn hình",
+      "otherSize": "Cỡ màn hình khác giữ lựa chọn riêng của nó.",
+      "dragTip": "Mẹo: nhấn giữ thanh điều hướng rồi kéo để đổi chỗ.",
+      "phone": {
+        "bottom-left": "Trái",
+        "bottom-center": "Giữa",
+        "bottom-right": "Phải",
+        "edge-left": "Mép trái",
+        "edge-right": "Mép phải"
+      },
+      "wide": {
+        "rail-left": "Trái",
+        "rail-right": "Phải"
+      }
+    },
+    "signOut": {
+      "title": "Thiết bị này",
+      "body": "Đăng xuất để máy này không còn mở được các chuyến đi. Tên bạn vẫn ở trong chuyến; vào lại bằng link mời.",
+      "button": "Đăng xuất thiết bị này",
+      "confirm": {
+        "title": "Đăng xuất khỏi máy này?",
+        "body": "Bạn sẽ cần link mời để mở lại {n} chuyến đi.",
+        "bodyNoCount": "Bạn sẽ cần link mời để mở lại các chuyến đi.",
+        "stay": "Ở lại",
+        "confirm": "Đăng xuất"
+      }
+    },
+    "version": "Phiên bản {version}",
+    "sections": {
+      "label": "Danh mục cài đặt",
+      "appearance": "Giao diện và ngôn ngữ",
+      "nav": "Vị trí thanh điều hướng",
+      "account": "Tài khoản"
+    }
+  },
+  "activity": {
+    "title": "Hoạt động",
+    "empty": "Chưa có hoạt động nào.",
+    "more": "Xem thêm",
+    "someone": "Ai đó",
+    "kind": {
+      "bank_account_set": "{actor} đổi tài khoản nhận tiền",
+      "bank_account_removed": "{actor} xóa tài khoản nhận tiền",
+      "fund_holder_changed": "{actor} thay đổi người giữ quỹ chung",
+      "fund_holder_assigned": "{actor} giao {subject} giữ quỹ chung",
+      "fund_holder_cleared": "{actor} tắt quỹ chung",
+      "member_added": "{actor} thêm {subject}",
+      "member_renamed": "{actor} đổi tên {subject}",
+      "member_removed": "{actor} gỡ {subject} khỏi chuyến",
+      "member_joined": "{actor} vào chuyến qua link",
+      "member_left": "{actor} rời chuyến",
+      "share_link_rotated": "{actor} đổi link mời, link cũ hết hiệu lực",
+      "trip_locked": "{actor} khóa chuyến đi",
+      "trip_unlocked": "{actor} mở khóa chuyến đi",
+      "trip_closed": "{actor} chốt chuyến đi",
+      "trip_reopened": "{actor} mở lại chuyến đi",
+      "unknown": "{actor} thay đổi chuyến đi"
+    }
+  }
+}

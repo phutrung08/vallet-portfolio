@@ -1,0 +1,557 @@
+{
+  "app": {
+    "name": "Vallet",
+    "tagline": "Wander together, split fair"
+  },
+  "demo": {
+    "banner": "This is a sample trip. Nothing is saved.",
+    "create": "Create a trip"
+  },
+  "home": {
+    "benefits": {
+      "log": "Log expenses as you go",
+      "share": "Share a link, everyone adds",
+      "settle": "See who pays whom, settle with a QR scan"
+    },
+    "createTrip": "Create a trip",
+    "freeNote": "Free · no sign-up needed",
+    "haveInvite": "I have an invite link",
+    "noTrips": "No trips yet.",
+    "overview": {
+      "open": "Open trip",
+      "recent": "Recent expenses",
+      "noExpenses": "No expenses yet."
+    },
+    "viewSample": "View a sample trip",
+    "yourTrips": "Your trips"
+  },
+  "nav": {
+    "expenses": "Expenses",
+    "balances": "Balances",
+    "add": "Add expense",
+    "members": "Members",
+    "settings": "Settings",
+    "moved": {
+      "bottom-left": "Navigation moved to the bottom left",
+      "bottom-center": "Navigation moved to the bottom center",
+      "bottom-right": "Navigation moved to the bottom right",
+      "edge-left": "Navigation moved to the left edge",
+      "edge-right": "Navigation moved to the right edge",
+      "rail-left": "Navigation moved to the left side",
+      "rail-right": "Navigation moved to the right side"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "home": "Back to home"
+  },
+  "common": {
+    "loading": "Loading…",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing…",
+    "today": "today",
+    "yesterday": "yesterday"
+  },
+  "offline": {
+    "banner": "Offline · showing the saved copy",
+    "updatedAt": "Updated at {time}",
+    "savedCopy": "Showing the saved copy"
+  },
+  "pwa": {
+    "updateAvailable": "New version available",
+    "reload": "Reload",
+    "later": "Later"
+  },
+  "errors": {
+    "network_error": "No connection. Please try again.",
+    "offline": "You're offline. Connect to the internet and try again.",
+    "timeout": "The network is slow. Please try again.",
+    "rate_limited": "Slow down a little, then try again.",
+    "payload_too_large": "That request is too large to send.",
+    "unauthenticated": "Your device session expired. Reload and try again.",
+    "validation_error": "Some details are not valid. Please check them.",
+    "not_found": "We couldn't find this trip.",
+    "trip_locked": "This trip is locked, so it is view-only.",
+    "trip_closed": "This trip is settled, so it can't be changed.",
+    "csrf_rejected": "Your session got stuck. Reload the page and try again.",
+    "member_not_active": "Someone on this action is no longer active in the trip. Reload and try again.",
+    "member_already_joined": "That member has already joined on another device.",
+    "no_fund": "This trip has no shared fund.",
+    "fund_in_use": "The fund has contributions or fund-paid expenses, so it can't be turned off yet.",
+    "name_taken": "Someone in the trip already has this name.",
+    "trip_full": "The trip is full.",
+    "member_is_fund_holder": "This person holds the fund. Change the fund holder first.",
+    "last_member": "The last person can't be removed from the trip.",
+    "invalid_split": "The split doesn't add up to the amount.",
+    "trip_limit_reached": "This trip has reached the maximum number of records.",
+    "device_trip_limit_reached": "This device has reached the maximum number of trips.",
+    "idempotency_conflict": "The previous request may already be saved. Check the list first.",
+    "version_conflict": "Someone else just edited this expense. Load the latest version and try again.",
+    "currency_not_supported": "VietQR transfers are only supported for trips in VND.",
+    "no_bank_account": "This member has not added a receiving bank account yet.",
+    "generic": "Something went wrong. Please try again."
+  },
+  "trips": {
+    "members": "{n} person | {n} people",
+    "status": {
+      "closed": "Settled",
+      "upcoming": "Upcoming",
+      "ongoing": "On the road"
+    }
+  },
+  "trip": {
+    "back": "Back",
+    "share": "Share trip",
+    "locked": "Locked",
+    "fundRemaining": "Fund left",
+    "fundNegative": "Fund is overdrawn",
+    "fundLink": "Group fund",
+    "spentLabel": "Spent",
+    "contributed": "Paid in {amount}",
+    "spent": "Spent {amount}",
+    "progress": "{percent}% of the fund spent",
+    "days": "Days",
+    "dayNumber": "Day {n}",
+    "expenseCount": "{n} expense | {n} expenses",
+    "emptyTitle": "No expenses yet",
+    "pickExpense": "Pick an expense to see its details",
+    "noExpenseYet": "No expenses yet. Tap + to add the first one",
+    "pane": {
+      "label": "Right pane",
+      "details": "Details",
+      "add": "Add",
+      "stats": "Stats"
+    }
+  },
+  "createTrip": {
+    "title": "Create a trip",
+    "name": "Trip name",
+    "namePlaceholder": "Phu Quoc in November",
+    "startsOn": "Start date",
+    "endsOn": "End date",
+    "fund": "Use a shared fund",
+    "fundHelp": "Everyone chips in up front to one fund, held by one person",
+    "fundHolder": "You will hold the fund, and can change that later",
+    "currency": "Currency",
+    "yourName": "Your name",
+    "others": "Other members",
+    "othersPlaceholder": "One person's name",
+    "add": "Add",
+    "remove": "Remove {name}",
+    "counter": "{n}/{max}",
+    "submit": "Create trip",
+    "submitting": "Creating…",
+    "errors": {
+      "nameRequired": "Enter a trip name",
+      "nameTooLong": "Trip name can be 80 characters at most",
+      "personRequired": "Enter a name",
+      "personTooLong": "Name can be 40 characters at most",
+      "duplicate": "Someone already has this name",
+      "tooMany": "Up to 49 other members",
+      "endBeforeStart": "End date cannot be before the start date",
+      "invalid": "This is not valid"
+    }
+  },
+  "expense": {
+    "fundName": "Group fund",
+    "subtitle": "{name} paid · {x}/{y} people",
+    "perPerson": "{amount} each · {mode}",
+    "unevenSplit": "Uneven split · {min}–{max}",
+    "excluded": "Exempt: {names}",
+    "andMore": "{names} and {n} more",
+    "split": {
+      "equal": "split equally",
+      "shares": "split by shares",
+      "percent": "split by percent",
+      "exact": "split by amount"
+    },
+    "details": "Details",
+    "edit": "Edit expense",
+    "delete": "Delete expense",
+    "deleteTitle": "Delete this expense?",
+    "deleteBody": "This can't be undone.",
+    "deleteConfirm": "Delete",
+    "notFound": "We couldn't find this expense.",
+    "shareCount": "{n} share | {n} shares",
+    "createdBy": "Added by {name}",
+    "editedBy": "Last edited by {name}"
+  },
+  "expenseForm": {
+    "close": "Close",
+    "amount": "Amount",
+    "title": "What for",
+    "titlePlaceholder": "Noodles, taxi, tickets…",
+    "date": "Date",
+    "category": "Category",
+    "categories": {
+      "food": "Food",
+      "transport": "Transport",
+      "lodging": "Lodging",
+      "activity": "Activities",
+      "shopping": "Shopping",
+      "other": "Other"
+    },
+    "payer": "Paid by",
+    "payerSheet": "Who paid?",
+    "you": "{name} (you)",
+    "splitAmong": "Split between {n} person | Split between {n} people",
+    "save": "Save expense",
+    "saving": "Saving…",
+    "errors": {
+      "amountRequired": "Enter an amount",
+      "amountTooLarge": "That amount is too large",
+      "titleRequired": "Enter what it was for",
+      "titleTooLong": "Up to 120 characters",
+      "dateRequired": "Pick a date",
+      "invalid": "This is not valid",
+      "missing": "{amount} short",
+      "excess": "{amount} over",
+      "noParticipants": "Pick at least one person",
+      "sharesZero": "Give someone at least one share",
+      "noteTooLong": "A note can be 500 characters at most",
+      "placeTooLong": "A place can be 200 characters at most"
+    },
+    "mode": "How to split",
+    "modes": {
+      "equal": "Equal",
+      "shares": "Shares",
+      "percent": "%",
+      "exact": "Amount"
+    },
+    "out": "Out",
+    "hint": "Tap someone to leave them out or add them back",
+    "fewerShares": "One share less for {name}",
+    "moreShares": "One share more for {name}",
+    "percentOf": "{name}'s percent",
+    "amountOf": "{name}'s amount",
+    "total": "Total {total} of {target}",
+    "moreFields": "Add a note or place",
+    "note": "Note",
+    "place": "Place",
+    "placePlaceholder": "Restaurant, area, address…",
+    "left": "{name} (left)",
+    "leftTag": "left",
+    "conflict": "Someone else just changed this expense",
+    "loadLatest": "Load the latest version",
+    "discardTitle": "Discard your changes?",
+    "discardBody": "The latest version will replace what you have changed on this screen."
+  },
+  "fund": {
+    "title": "Shared fund",
+    "remaining": "Left in the fund",
+    "holder": "Holder: {name}",
+    "paidTitle": "Paid in",
+    "notPaid": "Not paid",
+    "historyTitle": "Contribution history",
+    "historyEmpty": "No contributions yet",
+    "note": "If the fund runs short, anyone can pay from their own pocket; that is counted in the settlement.",
+    "add": "Record a contribution",
+    "who": "Who paid in?",
+    "amount": "Amount paid in",
+    "date": "Date paid",
+    "save": "Save",
+    "saving": "Saving…",
+    "changeHolder": "Change holder",
+    "holderSheet": "Who holds the fund?",
+    "turnOff": "Turn off shared fund",
+    "turnOffTitle": "Turn off the shared fund?",
+    "turnOffBody": "The trip will stop using a fund. You can turn it back on any time.",
+    "turnOffConfirm": "Turn off",
+    "turnOn": "Turn on shared fund",
+    "emptyTitle": "This trip has no shared fund",
+    "emptyBody": "Everyone pays into one fund first, one person holds it, and expenses are paid from it.",
+    "deleteTitle": "Delete this contribution?",
+    "deleteBody": "The amount will be taken out of the fund.",
+    "deleteConfirm": "Delete",
+    "deleteLabel": "Delete {name}'s contribution",
+    "errors": {
+      "amountRequired": "Enter an amount",
+      "amountTooLarge": "That amount is too large",
+      "dateRequired": "Pick a date"
+    }
+  },
+  "balances": {
+    "title": "Balances",
+    "left": "left",
+    "pays": "pays",
+    "tabs": {
+      "label": "How to view balances",
+      "transfers": "Who pays whom",
+      "members": "Per person"
+    },
+    "me": {
+      "receive": "You get back",
+      "pay": "You owe",
+      "settled": "You're all square",
+      "detail": "Fronted {paid} · your share {share}"
+    },
+    "pane": {
+      "readOnly": "This trip is view-only, so transfers cannot be recorded."
+    },
+    "transfersTitle": "Who pays whom",
+    "transferCount": "{n} transfer | {n} transfers",
+    "empty": "Everyone is square",
+    "frontedCaption": "Fronted / share owed",
+    "differenceCaption": "Difference",
+    "sent": "sent {amount}",
+    "received": "received {amount}",
+    "coverage": "Fronted {paid} of a {share} share",
+    "myAccount": "Your receiving account",
+    "myAccountEmpty": "Not added",
+    "qr": {
+      "button": "QR",
+      "open": "QR code: {payer} pays {payee}",
+      "title": "{payer} pays {payee}",
+      "amount": "Amount to transfer",
+      "label": "Transfer QR code",
+      "bank": "Bank",
+      "holder": "Recipient name",
+      "message": "Transfer message",
+      "last4": "•••• {last4}",
+      "hint": "Open your banking app, scan the code, check the recipient's name, then transfer",
+      "copy": "Copy amount",
+      "copied": "Copied",
+      "copyFailed": "Could not copy the amount.",
+      "noAccount": "{name} has not added a bank account",
+      "addAccount": "Add my account",
+      "unsupported": "QR codes only work for trips in VND. Pay another way, then record it here.",
+      "done": "I've paid",
+      "recording": "Recording…",
+      "errors": {
+        "amountRequired": "Enter an amount",
+        "amountTooLarge": "At most {max}"
+      },
+      "accountChanged": "{name} changed their receiving account at {time} {day}.",
+      "accountChangedHint": "Check with {name} before you pay if this looks wrong."
+    },
+    "paidTitle": "Paid",
+    "deleteLabel": "Delete the transfer from {payer} to {payee}",
+    "deleteTitle": "Delete this transfer?",
+    "deleteBody": "Balances will be worked out as if it never happened.",
+    "deleteConfirm": "Delete",
+    "close": {
+      "label": "Close the trip",
+      "title": "Close the trip?",
+      "body": "Once closed, no more expenses can be added. Transfers can still be recorded, and you can reopen the trip any time.",
+      "confirm": "Close"
+    },
+    "reopen": {
+      "label": "Reopen the trip",
+      "title": "Reopen the trip?",
+      "body": "Everyone can add and edit expenses again.",
+      "confirm": "Reopen"
+    }
+  },
+  "stats": {
+    "paidBy": "Who paid how much",
+    "share": "Share of costs {amount}"
+  },
+  "summary": {
+    "title": "Trip summary",
+    "link": "Trip summary",
+    "total": "Total spent",
+    "expenseCount": "{n} expense | {n} expenses",
+    "byCategory": "By category",
+    "percent": "{n}%",
+    "perPerson": "Per person",
+    "approx": "~{amount}",
+    "perDay": "Per day"
+  },
+  "bank": {
+    "title": "Receiving account",
+    "current": "In use: {bank} •••• {last4}",
+    "search": "Search banks",
+    "bankLabel": "Bank",
+    "noMatch": "No bank found",
+    "number": "Account number",
+    "name": "Account holder name",
+    "printed": "Will be printed as: {name}",
+    "save": "Save",
+    "saving": "Saving…",
+    "remove": "Remove account",
+    "removeTitle": "Remove your receiving account?",
+    "removeBody": "People will no longer be able to scan a QR code to pay you.",
+    "removeConfirm": "Remove",
+    "errors": {
+      "bankRequired": "Choose a bank",
+      "numberInvalid": "The account number has 6 to 19 digits",
+      "nameInvalid": "Letters and spaces only, at most 50 characters"
+    }
+  },
+  "members": {
+    "title": "Members",
+    "invite": {
+      "title": "Invite to the trip",
+      "body": "Anyone with the link can view and add expenses, no account needed.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "copyFailed": "Couldn't copy. Try Share or QR.",
+      "share": "Share",
+      "shareText": "Join me on the trip {name} on Vallet",
+      "qr": "QR",
+      "qrTitle": "Scan to join the trip",
+      "qrLabel": "QR code of the invite link"
+    },
+    "detail": {
+      "back": "Invite and link security",
+      "fronted": "Fronted",
+      "share": "Share to cover",
+      "net": "Difference",
+      "bank": "Receiving account",
+      "noBank": "Not added yet"
+    },
+    "listTitle": "People in the trip",
+    "you": "You",
+    "holder": "Fund holder",
+    "renameOf": "Rename {name}",
+    "renameTitle": "Rename",
+    "renameLabel": "New name",
+    "renameSave": "Save",
+    "removeOf": "Remove {name} from the trip",
+    "removeTitle": "Remove {name} from the trip?",
+    "removeBody": "This person is left out of new splits. Expenses already recorded are kept.",
+    "removeConfirm": "Remove",
+    "addLabel": "Add a person",
+    "addPlaceholder": "One name",
+    "addButton": "Add",
+    "errors": {
+      "required": "Enter a name",
+      "tooLong": "Names can have up to 40 characters",
+      "duplicate": "Someone already has this name"
+    },
+    "security": {
+      "title": "Link security",
+      "rotate": {
+        "label": "Change invite link",
+        "title": "Change the invite link?",
+        "body": "The old link stops working for new people. People who already joined keep their access.",
+        "confirm": "Change link"
+      },
+      "lock": {
+        "label": "Lock the trip",
+        "title": "Lock the trip?",
+        "body": "While locked, nobody can add or change anything, including people joining by link. You can unlock any time.",
+        "confirm": "Lock"
+      },
+      "unlock": {
+        "label": "Unlock",
+        "title": "Unlock the trip?",
+        "body": "Everyone can add and edit expenses again.",
+        "confirm": "Unlock"
+      },
+      "leave": {
+        "label": "Leave the trip on this device",
+        "title": "Leave the trip on this device?",
+        "body": "This device will no longer open the trip. Your name stays in the list; to come back, use the invite link and pick your name.",
+        "confirm": "Leave"
+      }
+    },
+    "activity": "Activity"
+  },
+  "join": {
+    "invited": "You're invited to the trip",
+    "alreadyJoined": "You're already in this trip.",
+    "openTrip": "Open the trip",
+    "whoAreYou": "Who are you?",
+    "alreadyIn": "already in",
+    "newPerson": "New person",
+    "yourName": "Your name",
+    "submit": "Join the trip",
+    "caption": "No sign-up needed. Pick your name and go.",
+    "locked": "The trip is locked, so you can't join right now.",
+    "goneTitle": "This link no longer works",
+    "goneBody": "The link is old or incomplete. Ask someone in the group to send a new one.",
+    "pasteTitle": "Paste the invite link",
+    "pasteBody": "Open the full invite link, or paste it here to continue.",
+    "pasteLabel": "Invite link",
+    "pastePlaceholder": "https://…/join#…",
+    "pasteContinue": "Continue",
+    "pasteInvalid": "That link isn't right. Paste the whole link, including the part after the #."
+  },
+  "settings": {
+    "title": "Settings",
+    "back": "Back",
+    "device": {
+      "title": "This device",
+      "body": "Your trips are tied to this browser. Clearing browser data loses access, unless you open your invite link again.",
+      "offline": "A copy of your trips is kept on this device so you can view them offline."
+    },
+    "language": {
+      "label": "Language",
+      "en": "English",
+      "vi": "Tiếng Việt"
+    },
+    "theme": {
+      "label": "Appearance",
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "navPlacement": {
+      "title": "Navigation bar",
+      "small": "On this small screen the navigation always sits at the bottom center.",
+      "phoneTitle": "On large phones",
+      "wideTitle": "On wide screens",
+      "bottomGroup": "At the bottom",
+      "edgeGroup": "Along an edge",
+      "otherSize": "Other screen sizes keep their own choice.",
+      "dragTip": "Tip: press and hold the navigation bar, then drag to move it.",
+      "phone": {
+        "bottom-left": "Left",
+        "bottom-center": "Center",
+        "bottom-right": "Right",
+        "edge-left": "Left edge",
+        "edge-right": "Right edge"
+      },
+      "wide": {
+        "rail-left": "Left",
+        "rail-right": "Right"
+      }
+    },
+    "signOut": {
+      "title": "This device",
+      "body": "Sign out so this device can no longer open your trips. You stay in each trip by name; rejoin with the invite link.",
+      "button": "Sign out this device",
+      "confirm": {
+        "title": "Sign out of this device?",
+        "body": "You'll need an invite link to open your {n} trip again. | You'll need an invite link to open your {n} trips again.",
+        "bodyNoCount": "You'll need an invite link to open your trips again.",
+        "stay": "Stay",
+        "confirm": "Sign out"
+      }
+    },
+    "version": "Version {version}",
+    "sections": {
+      "label": "Settings categories",
+      "appearance": "Appearance and language",
+      "nav": "Navigation position",
+      "account": "Account"
+    }
+  },
+  "activity": {
+    "title": "Activity",
+    "empty": "No activity yet.",
+    "more": "Load more",
+    "someone": "Someone",
+    "kind": {
+      "bank_account_set": "{actor} updated their receiving account",
+      "bank_account_removed": "{actor} removed their receiving account",
+      "fund_holder_changed": "{actor} updated the shared fund holder",
+      "fund_holder_assigned": "{actor} made {subject} hold the shared fund",
+      "fund_holder_cleared": "{actor} turned off the shared fund",
+      "member_added": "{actor} added {subject}",
+      "member_renamed": "{actor} renamed {subject}",
+      "member_removed": "{actor} removed {subject} from the trip",
+      "member_joined": "{actor} joined through the link",
+      "member_left": "{actor} left the trip",
+      "share_link_rotated": "{actor} changed the invite link, the old one no longer works",
+      "trip_locked": "{actor} locked the trip",
+      "trip_unlocked": "{actor} unlocked the trip",
+      "trip_closed": "{actor} closed the trip",
+      "trip_reopened": "{actor} reopened the trip",
+      "unknown": "{actor} updated the trip"
+    }
+  }
+}
