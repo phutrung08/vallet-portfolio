@@ -1,3 +1,4 @@
+import uuid
 from collections.abc import AsyncIterator
 
 import pytest
@@ -5,7 +6,9 @@ from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 
 from app.api.csrf import WRITE_METHODS, CsrfMiddleware
-from app.core.config import DEV_ORIGIN
+from app.core.config import DEV_ORIGIN, Settings
+from app.main import create_app
+from tests.api.routes import served_routes
 
 pytestmark = pytest.mark.anyio
 
@@ -117,3 +120,32 @@ async def test_the_documented_body_is_the_only_content(bare: AsyncClient) -> Non
 
     assert response.headers["content-type"] == "application/json"
     assert response.content == b'{"code":"csrf_rejected","message":"Request rejected"}'
+
+
+def _all_app_write_routes() -> list[tuple[str, str]]:
+    app = create_app(Settings(_env_file=None, environment="development"))
+    return [(method, path) for method, path, _ in served_routes(app) if method in WRITE_METHODS]
+
+
+APP_WRITE_ROUTES = _all_app_write_routes()
+
+
+@pytest.mark.parametrize(
+    ("method", "path"),
+    APP_WRITE_ROUTES,
+    ids=[f"{method} {path}" for method, path in APP_WRITE_ROUTES],
+)
+async def test_every_served_write_route_rejects_requests_without_csrf_header(
+    app: FastAPI, method: str, path: str
+) -> None:
+    url = path.format(
+        trip_id=uuid.uuid4(),
+        member_id=uuid.uuid4(),
+        expense_id=uuid.uuid4(),
+        contribution_id=uuid.uuid4(),
+        payment_id=uuid.uuid4(),
+    )
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as client:
+        response = await client.request(method, url, json={})
+
+    assert (response.status_code, response.json()) == (403, REJECTED)

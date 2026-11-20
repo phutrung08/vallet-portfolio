@@ -133,3 +133,77 @@ async def test_outsiders_get_404(client: AsyncClient, other_client: AsyncClient)
     ]
 
     assert [(r.status_code, r.json()) for r in responses] == [(404, NOT_FOUND)] * 2
+
+
+async def test_locked_trip_rejects_all_financial_and_member_writes(client: AsyncClient) -> None:
+    detail = await create(client, uses_fund=True, creator_name="An", member_names=["Binh", "Chi"])
+    trip_id = detail["id"]
+    ids = [m["id"] for m in detail["members"]]
+    expense_resp = await client.post(
+        f"/trips/{trip_id}/expenses",
+        json={
+            "title": "Dinner",
+            "amount": 100_000,
+            "category": "food",
+            "spent_on": "2026-11-07",
+            "paid_by": ids[0],
+            "split": {"mode": "equal", "participants": ids},
+        },
+    )
+    contrib_resp = await client.post(
+        f"/trips/{trip_id}/fund/contributions",
+        json={"member_id": ids[0], "amount": 50_000, "contributed_on": "2026-11-07"},
+    )
+    payment_resp = await client.post(
+        f"/trips/{trip_id}/payments",
+        json={"payer": ids[1], "payee": ids[0], "amount": 25_000, "paid_on": "2026-11-08"},
+    )
+    await client.post(f"/trips/{trip_id}/lock")
+
+    refused = [
+        await client.post(f"/trips/{trip_id}/members", json={"display_name": "Dung"}),
+        await client.patch(f"/trips/{trip_id}/members/{ids[1]}", json={"display_name": "Ben"}),
+        await client.delete(f"/trips/{trip_id}/members/{ids[1]}"),
+        await client.post(
+            f"/trips/{trip_id}/expenses",
+            json={
+                "title": "Coffee",
+                "amount": 30_000,
+                "category": "food",
+                "spent_on": "2026-11-07",
+                "paid_by": ids[0],
+                "split": {"mode": "equal", "participants": ids},
+            },
+        ),
+        await client.put(
+            f"/trips/{trip_id}/expenses/{expense_resp.json()['id']}",
+            json={
+                "title": "Dinner",
+                "amount": 120_000,
+                "category": "food",
+                "spent_on": "2026-11-07",
+                "paid_by": ids[0],
+                "split": {"mode": "equal", "participants": ids},
+                "version": 1,
+            },
+        ),
+        await client.delete(f"/trips/{trip_id}/expenses/{expense_resp.json()['id']}"),
+        await client.put(f"/trips/{trip_id}/fund", json={"holder_id": ids[1]}),
+        await client.post(
+            f"/trips/{trip_id}/fund/contributions",
+            json={"member_id": ids[0], "amount": 10_000, "contributed_on": "2026-11-07"},
+        ),
+        await client.delete(f"/trips/{trip_id}/fund/contributions/{contrib_resp.json()['id']}"),
+        await client.post(
+            f"/trips/{trip_id}/payments",
+            json={"payer": ids[2], "payee": ids[0], "amount": 10_000, "paid_on": "2026-11-08"},
+        ),
+        await client.delete(f"/trips/{trip_id}/payments/{payment_resp.json()['id']}"),
+        await client.put(
+            f"/trips/{trip_id}/members/me/bank-account",
+            json={"bank_bin": "970436", "account_number": "0123456789", "account_name": "An"},
+        ),
+        await client.delete(f"/trips/{trip_id}/members/me/bank-account"),
+    ]
+
+    assert [(r.status_code, r.json()) for r in refused] == [(403, TRIP_LOCKED)] * len(refused)

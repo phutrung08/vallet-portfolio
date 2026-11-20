@@ -82,6 +82,14 @@ async def share_lock_trip(session: AsyncSession, trip_id: uuid.UUID) -> Trip | N
     return await session.scalar(statement.execution_options(populate_existing=True))
 
 
+async def find_member(
+    session: AsyncSession, trip_id: uuid.UUID, member_id: uuid.UUID
+) -> Member | None:
+    """Return a single member row (including removed members), or None when absent."""
+    statement = select(Member).where(Member.trip_id == trip_id, Member.id == member_id)
+    return await session.scalar(statement)
+
+
 async def find_active_member(
     session: AsyncSession, trip_id: uuid.UUID, member_id: uuid.UUID
 ) -> Member | None:

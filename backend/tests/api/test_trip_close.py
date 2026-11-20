@@ -129,3 +129,84 @@ async def test_outsiders_get_404(client: AsyncClient, other_client: AsyncClient)
     ]
 
     assert [(r.status_code, r.json()) for r in responses] == [(404, NOT_FOUND)] * 2
+
+
+async def test_closed_trip_rejects_expense_member_fund_writes_but_allows_settlement_writes(
+    client: AsyncClient,
+) -> None:
+    trip_closed = {"code": "trip_closed", "message": "Trip is closed"}
+    detail = await create(client, uses_fund=True, creator_name="An", member_names=["Binh", "Chi"])
+    trip_id = detail["id"]
+    ids = [m["id"] for m in detail["members"]]
+    expense_resp = await client.post(
+        f"/trips/{trip_id}/expenses",
+        json={
+            "title": "Dinner",
+            "amount": 100_000,
+            "category": "food",
+            "spent_on": "2026-11-07",
+            "paid_by": ids[0],
+            "split": {"mode": "equal", "participants": ids},
+        },
+    )
+    contrib_resp = await client.post(
+        f"/trips/{trip_id}/fund/contributions",
+        json={"member_id": ids[0], "amount": 50_000, "contributed_on": "2026-11-07"},
+    )
+    await client.post(f"/trips/{trip_id}/close")
+
+    refused = [
+        await client.post(f"/trips/{trip_id}/members", json={"display_name": "Dung"}),
+        await client.patch(f"/trips/{trip_id}/members/{ids[1]}", json={"display_name": "Ben"}),
+        await client.delete(f"/trips/{trip_id}/members/{ids[1]}"),
+        await client.post(
+            f"/trips/{trip_id}/expenses",
+            json={
+                "title": "Coffee",
+                "amount": 30_000,
+                "category": "food",
+                "spent_on": "2026-11-07",
+                "paid_by": ids[0],
+                "split": {"mode": "equal", "participants": ids},
+            },
+        ),
+        await client.put(
+            f"/trips/{trip_id}/expenses/{expense_resp.json()['id']}",
+            json={
+                "title": "Dinner",
+                "amount": 120_000,
+                "category": "food",
+                "spent_on": "2026-11-07",
+                "paid_by": ids[0],
+                "split": {"mode": "equal", "participants": ids},
+                "version": 1,
+            },
+        ),
+        await client.delete(f"/trips/{trip_id}/expenses/{expense_resp.json()['id']}"),
+        await client.put(f"/trips/{trip_id}/fund", json={"holder_id": ids[1]}),
+        await client.post(
+            f"/trips/{trip_id}/fund/contributions",
+            json={"member_id": ids[0], "amount": 10_000, "contributed_on": "2026-11-07"},
+        ),
+        await client.delete(f"/trips/{trip_id}/fund/contributions/{contrib_resp.json()['id']}"),
+    ]
+    assert [(r.status_code, r.json()) for r in refused] == [(403, trip_closed)] * len(refused)
+
+    # Settlement writes remain open while the trip is closed and unlocked.
+    pay = await client.post(
+        f"/trips/{trip_id}/payments",
+        json={"payer": ids[1], "payee": ids[0], "amount": 25_000, "paid_on": "2026-11-08"},
+    )
+    del_pay = await client.delete(f"/trips/{trip_id}/payments/{pay.json()['id']}")
+    put_bank = await client.put(
+        f"/trips/{trip_id}/members/me/bank-account",
+        json={"bank_bin": "970436", "account_number": "0123456789", "account_name": "An"},
+    )
+    del_bank = await client.delete(f"/trips/{trip_id}/members/me/bank-account")
+
+    assert (pay.status_code, del_pay.status_code, put_bank.status_code, del_bank.status_code) == (
+        201,
+        204,
+        200,
+        204,
+    )

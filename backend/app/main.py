@@ -3,7 +3,20 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.api import balances, devices, expenses, fund, health, join, members, payments, trips
+from app.api import (
+    balances,
+    bank_accounts,
+    devices,
+    events,
+    expenses,
+    fund,
+    health,
+    join,
+    members,
+    payments,
+    trips,
+    vietqr,
+)
 from app.api.body_limit import BodyLimitMiddleware
 from app.api.csrf import CsrfMiddleware
 from app.api.errors import register_error_handlers
@@ -52,6 +65,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(fund.router)
     application.include_router(balances.router)
     application.include_router(payments.router)
+    application.include_router(bank_accounts.router)
+    application.include_router(vietqr.router)
+    application.include_router(events.router)
     return application
 
 
