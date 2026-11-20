@@ -1,0 +1,9 @@
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "S", "ANN"]
+
+[lint.per-file-ignores]
+"test_*.py" = ["S101"]
+"conftest.py" = ["S101"]
