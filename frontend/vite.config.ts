@@ -4,6 +4,8 @@ import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import vueI18n from '@intlify/unplugin-vue-i18n/vite'
+import { VitePWA } from 'vite-plugin-pwa'
+import { pwaOptions } from './src/pwa/pwaConfig'
 
 const { version } = JSON.parse(
   readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
@@ -23,6 +25,7 @@ export default defineConfig({
       strictMessage: true,
       escapeHtml: false,
     }),
+    VitePWA(pwaOptions),
   ],
   define: {
     __INTLIFY_PROD_DEVTOOLS__: false,

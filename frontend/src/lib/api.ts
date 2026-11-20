@@ -1,3 +1,5 @@
+import { evictTripCacheOnAuthError, forgetAllTripCopies } from '@/lib/offlineCache'
+
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export interface RequestOptions {
@@ -123,6 +125,23 @@ function reportCachedCopy(response: Response): void {
   for (const listener of cachedCopyListeners) listener(copy)
 }
 
+function evictCacheOnAuthError(path: string, status: number): void {
+  if (status === 401) {
+    void forgetAllTripCopies().catch(() => undefined)
+    return
+  }
+  if (status !== 403 && status !== 404) return
+  const match = /^\/trips\/([^/?#]+)(?:[/?#]|$)/.exec(path)
+  if (!match?.[1]) return
+  let tripId = match[1]
+  try {
+    tripId = decodeURIComponent(tripId)
+  } catch {
+    // Keep the raw path segment if percent decoding fails.
+  }
+  void evictTripCacheOnAuthError(tripId, status).catch(() => undefined)
+}
+
 export async function apiRequest<T>(
   method: Method,
   path: string,
@@ -132,7 +151,10 @@ export async function apiRequest<T>(
   const response = await send(buildUrl(path), method, options)
   reportCachedCopy(response)
   const parsed = await readJson(response)
-  if (!response.ok) throw httpError(response.status, parsed)
+  if (!response.ok) {
+    evictCacheOnAuthError(path, response.status)
+    throw httpError(response.status, parsed)
+  }
   if (!parsed.ok) throw new ApiError(response.status, 'invalid_response', 'Invalid server response')
   return parsed.value as T
 }

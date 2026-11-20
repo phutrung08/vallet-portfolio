@@ -238,3 +238,44 @@ describe('offline copy signal', () => {
     expect(listener).not.toHaveBeenCalled()
   })
 })
+
+describe('auth-error offline cache eviction', () => {
+  it('clears the whole API cache on 401 responses', async () => {
+    const removeAll = vi.fn<() => Promise<boolean>>(() => Promise.resolve(true))
+    vi.stubGlobal('caches', { delete: removeAll })
+    respond('{"code":"unauthenticated","message":"Expired"}', 401)
+    await rejection(api.get('/trips/abc/balances'))
+    await vi.waitFor(() => expect(removeAll).toHaveBeenCalledWith('vallet-api-v1'))
+  })
+
+  it.each([403, 404])('evicts only the affected trip cache on %i responses', async (status) => {
+    const requests = [
+      '/api/trips',
+      '/api/trips/abc',
+      '/api/trips/abc/balances',
+      '/api/trips/xyz',
+    ].map((path) => new Request(`https://app.example${path}`))
+    const removeEntry = vi.fn<(request: Request) => Promise<boolean>>(() => Promise.resolve(true))
+    const open = vi.fn(() => Promise.resolve({ keys: () => Promise.resolve(requests), delete: removeEntry }))
+    vi.stubGlobal('caches', { open })
+    respond('{"code":"not_found","message":"Missing"}', status)
+    await rejection(api.get('/trips/abc/balances'))
+    await vi.waitFor(() => expect(removeEntry).toHaveBeenCalledTimes(2))
+    expect(open).toHaveBeenCalledWith('vallet-api-v1')
+    expect(removeEntry.mock.calls.map(([req]) => new URL(req.url).pathname)).toEqual([
+      '/api/trips/abc',
+      '/api/trips/abc/balances',
+    ])
+  })
+
+  it('leaves cached entries untouched on server 500 errors', async () => {
+    const removeAll = vi.fn()
+    const open = vi.fn()
+    vi.stubGlobal('caches', { delete: removeAll, open })
+    respond('{"code":"internal_error","message":"Oops"}', 500)
+    await rejection(api.get('/trips/abc/balances'))
+    await new Promise((resolve) => setTimeout(resolve, 0))
+    expect(removeAll).not.toHaveBeenCalled()
+    expect(open).not.toHaveBeenCalled()
+  })
+})
