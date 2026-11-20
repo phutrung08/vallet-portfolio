@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 const css = readFileSync(resolve(process.cwd(), 'src/styles/tokens.css'), 'utf8')
+const sheetCss = readFileSync(resolve(process.cwd(), 'src/styles/sheet.css'), 'utf8')
 const html = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8')
 
 describe('design tokens and color-scheme setup', () => {
@@ -25,5 +26,14 @@ describe('design tokens and color-scheme setup', () => {
     expect(css).toContain('scroll-padding-bottom:')
     expect(css).toContain('overflow-wrap: break-word;')
     expect(css).toContain('text-wrap: balance;')
+  })
+
+  it('uses native <dialog> sheets with backdrop scroll containment and reduced motion support', () => {
+    expect(sheetCss).toContain('dialog.sheet-dialog:not([open])')
+    expect(sheetCss).toContain('dialog.sheet-dialog::backdrop')
+    expect(sheetCss).toContain('overscroll-behavior: contain;')
+    expect(sheetCss).toContain('.sheet-handle')
+    expect(sheetCss).toContain('@media (horizontal-viewport-segments: 2)')
+    expect(sheetCss).toContain('@media (prefers-reduced-motion: reduce)')
   })
 })

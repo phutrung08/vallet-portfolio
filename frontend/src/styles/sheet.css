@@ -1,0 +1,99 @@
+/*
+ * Native <dialog> bottom sheets for BottomSheet.vue and ConfirmSheet.vue.
+ * Mobile: a bottom sheet that slides up. From the split breakpoint: centered dialog with hard shadow.
+ * Across a vertical hinge, the dialog centers in the right segment while the backdrop spans the screen.
+ * Horizontal fold placement lives in nav.css. Plain unlayered rules so display/backdrop win over utilities.
+ */
+dialog.sheet-dialog:not([open]) {
+  display: none;
+}
+
+dialog.sheet-dialog[open] {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  color: inherit;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+dialog.sheet-dialog[open]:not(:modal) {
+  z-index: 50;
+  background: rgb(0 0 0 / 0.5);
+}
+
+dialog.sheet-dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.sheet-enter-active,
+.sheet-leave-active {
+  transition: opacity 200ms ease-out;
+}
+
+.sheet-enter-active .bottom-sheet-panel,
+.sheet-leave-active .bottom-sheet-panel {
+  transition: transform 200ms ease-out;
+}
+
+.sheet-enter-from,
+.sheet-leave-to {
+  opacity: 0;
+}
+
+.sheet-enter-from .bottom-sheet-panel,
+.sheet-leave-to .bottom-sheet-panel {
+  transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-enter-active,
+  .sheet-leave-active,
+  .sheet-enter-active .bottom-sheet-panel,
+  .sheet-leave-active .bottom-sheet-panel {
+    transition: none;
+  }
+}
+
+@media (width >= theme(--breakpoint-split)) {
+  dialog.sheet-dialog[open] {
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .bottom-sheet-panel {
+    max-width: 30rem;
+    border-width: 1.5px;
+    border-radius: var(--radius-sheet);
+    box-shadow: var(--shadow-lift);
+    padding-block: 1.25rem;
+  }
+
+  .sheet-handle {
+    display: none;
+  }
+
+  .sheet-enter-from .bottom-sheet-panel,
+  .sheet-leave-to .bottom-sheet-panel {
+    transform: translateY(1rem);
+  }
+}
+
+/* Vertical hinge: center the dialog within the right segment alongside the detail pane. */
+@media (horizontal-viewport-segments: 2) {
+  dialog.sheet-dialog[open] {
+    padding-left: max(1rem, env(viewport-segment-left 1 0));
+  }
+}
