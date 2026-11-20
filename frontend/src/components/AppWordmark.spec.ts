@@ -5,7 +5,8 @@ import AppWordmark from './AppWordmark.vue'
 describe('AppWordmark', () => {
   it('is announced as one word and hides its two halves', () => {
     const wrapper = mount(AppWordmark)
-    expect(wrapper.attributes('aria-label')).toBe('Vallet')
+    expect(wrapper.attributes('aria-label')).toBeUndefined()
+    expect(wrapper.get('.sr-only').text()).toBe('Vallet')
     const parts = wrapper.findAll('span[aria-hidden="true"]')
     expect(parts.map((part) => part.text())).toEqual(['val', 'let'])
   })
