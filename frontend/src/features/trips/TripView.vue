@@ -163,6 +163,7 @@ const addExpense = useAddExpense(() => tripId.value)
     v-if="trip"
     :trip-id="trip.id"
     :labels="navLabels"
+    :can-add="!trip.closed && !trip.locked"
     @add="addExpense"
   />
 </template>

@@ -1,4 +1,4 @@
-import type { MemberStanding, Payment, Transfer, TripMember } from '@/entities'
+import type { BankAccount, MemberStanding, Payment, Transfer, TripMember } from '@/entities'
 
 export type MeStatus = 'receive' | 'pay' | 'settled'
 
@@ -42,4 +42,11 @@ export const ACCOUNT_CHANGE_WARNING_DAYS = 7
 export function changedRecently(changedAt: string | null, now: Date): boolean {
   if (changedAt === null) return false
   return now.getTime() - new Date(changedAt).getTime() <= ACCOUNT_CHANGE_WARNING_DAYS * 86_400_000
+}
+
+/** Stable identity key for a payee's stored bank account so TransferPanel remounts when it changes. */
+export function payeeAccountKey(accounts: readonly BankAccount[], payeeId: string): string {
+  const account = accounts.find((item) => item.member_id === payeeId)
+  if (!account) return 'none'
+  return `${account.bank_bin}:${account.account_last4}:${account.bank_account_changed_at ?? ''}`
 }

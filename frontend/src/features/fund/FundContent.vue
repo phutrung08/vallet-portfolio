@@ -125,7 +125,7 @@ async function turnOff(): Promise<void> {
       </div>
       <div
         v-if="editable"
-        class="bg-cream sticky bottom-0 -mx-4 mt-auto px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom))]"
+        class="bg-cream border-line sticky bottom-0 z-10 -mx-4 mt-auto border-t px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom))]"
       >
         <BaseButton
           variant="success"

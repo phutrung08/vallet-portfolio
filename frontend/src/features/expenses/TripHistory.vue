@@ -108,6 +108,7 @@ defineExpose({ invalidate, refreshDays })
       {{ t('trip.emptyTitle') }}
     </p>
     <BaseButton
+      v-if="!trip.closed && !trip.locked"
       variant="primary"
       @click="addExpense"
     >
