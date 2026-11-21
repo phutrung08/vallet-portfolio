@@ -70,7 +70,7 @@ export const pwaOptions: Partial<VitePWAOptions> = {
         handler: 'NetworkFirst',
         options: {
           cacheName: API_CACHE_NAME,
-          networkTimeoutSeconds: 4,
+          networkTimeoutSeconds: 10,
           cacheableResponse: { statuses: [200] },
           expiration: { maxEntries: 300, maxAgeSeconds: 30 * 24 * 60 * 60, purgeOnQuotaError: true },
           plugins: [
