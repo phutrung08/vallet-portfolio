@@ -11,7 +11,7 @@ withDefaults(defineProps<{ size?: 'sm' | 'md' }>(), { size: 'sm' })
       class="text-ink"
       aria-hidden="true"
     >val</span><span
-      class="text-green"
+      class="text-green-ink"
       aria-hidden="true"
     >let</span>
   </span>

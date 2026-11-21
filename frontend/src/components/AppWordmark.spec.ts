@@ -9,6 +9,7 @@ describe('AppWordmark', () => {
     expect(wrapper.get('.sr-only').text()).toBe('Vallet')
     const parts = wrapper.findAll('span[aria-hidden="true"]')
     expect(parts.map((part) => part.text())).toEqual(['val', 'let'])
+    expect(parts[1]?.classes()).toContain('text-green-ink')
   })
 
   it('defaults to the small size and supports md', () => {
