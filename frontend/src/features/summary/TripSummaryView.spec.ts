@@ -136,4 +136,23 @@ describe('TripSummaryView', () => {
     expect(view.text()).toContain('No expenses yet')
     expect(view.find('[role="img"]').exists()).toBe(false)
   })
+
+  it('shows who paid how much from summary.payers without extra API calls', async () => {
+    serve({
+      ...sampleSummary,
+      payers: [
+        { paid_by: null, count: 1, amount: 100_000 },
+        { paid_by: '1', count: 2, amount: 300_000 },
+      ],
+    })
+    const view = await mountSummary()
+    expect(view.text()).toContain('Who paid how much')
+    expect(view.text()).toContain('Alex')
+    expect(view.text()).toContain('₫300,000')
+    expect(view.text()).toContain('2 expenses')
+    expect(view.text()).toContain('Group fund')
+    expect(view.text()).toContain('₫100,000')
+    expect(view.text()).toContain('1 expense')
+    expect(get.mock.calls.map(([path]) => path).sort()).toEqual(['/trips/abc', '/trips/abc/summary'])
+  })
 })
