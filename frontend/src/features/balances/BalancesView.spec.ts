@@ -46,7 +46,9 @@ describe('BalancesView header and me card', () => {
     )
     const view = await mountBalances()
     expect(view.text()).toContain('You owe')
-    expect(view.text()).toContain('-₫50,000')
+    expect(view.text()).toContain('₫50,000')
+    expect(view.text()).not.toContain('-₫50,000')
+    expect(view.find('.bg-yellow-soft').exists()).toBe(true)
   })
 
   it('tells me when I am done', async () => {

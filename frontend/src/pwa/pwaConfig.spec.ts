@@ -85,6 +85,8 @@ describe('storableResponse', () => {
     expect(await storableResponse({ response: plain })).toBe(plain)
     const privateOne = answer(200, 'private, max-age=60')
     expect(await rebuilt(storableResponse)({ response: privateOne })).toBe(privateOne)
+    const privateNoCache = answer(200, 'private, no-cache')
+    expect(await rebuilt(storableResponse)({ response: privateNoCache })).toBe(privateNoCache)
     expect(await rebuilt(storableResponse)({ response: answer(200, 'no-store') })).toBeNull()
   })
 })
@@ -128,7 +130,7 @@ describe('pwaOptions', () => {
     expect(route?.urlPattern).toBe(isOfflineReadable)
     expect(route?.options).toMatchObject({
       cacheName: API_CACHE_NAME,
-      networkTimeoutSeconds: 4,
+      networkTimeoutSeconds: 10,
       cacheableResponse: { statuses: [200] },
       expiration: { maxEntries: 300, maxAgeSeconds: 30 * 24 * 60 * 60 },
     })

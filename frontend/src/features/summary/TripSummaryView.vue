@@ -55,6 +55,7 @@ const addExpense = useAddExpense(() => tripId.value)
     />
     <SummaryContent
       v-else-if="trip && summary"
+      :trip="trip"
       :summary="summary"
       :currency="trip.currency"
     />
@@ -62,6 +63,7 @@ const addExpense = useAddExpense(() => tripId.value)
       v-if="trip"
       :trip-id="trip.id"
       :labels="navLabels"
+      :can-add="!trip.closed && !trip.locked"
       @add="addExpense"
     />
   </main>

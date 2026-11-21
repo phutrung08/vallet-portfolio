@@ -87,6 +87,13 @@ async def test_a_route_cache_control_is_kept(api: MakeClient) -> None:
     assert security_headers(response) == EXPECTED
 
 
+async def test_default_cache_control_is_private_no_cache(api: MakeClient) -> None:
+    response = await api(True).get("/health")
+
+    assert response.headers["cache-control"] == "private, no-cache"
+    assert security_headers(response) == EXPECTED
+
+
 async def test_a_csrf_refusal_carries_the_headers(api: MakeClient) -> None:
     response = await api(True).post("/probe", json={})
 

@@ -87,7 +87,7 @@ const confirmingReload = ref(false)
       {{ t('expense.delete') }}
     </BaseButton>
 
-    <div class="bg-cream sticky bottom-0 -mx-4 mt-auto flex flex-col gap-2 px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+    <div class="bg-cream border-line sticky bottom-0 z-10 -mx-4 mt-auto flex flex-col gap-2 border-t px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom))]">
       <div
         v-if="conflict"
         role="alert"

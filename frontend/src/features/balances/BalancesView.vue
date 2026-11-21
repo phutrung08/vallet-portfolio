@@ -134,6 +134,7 @@ const myAccount = computed(() => accounts.value.find((item) => item.member_id ==
     v-if="trip"
     :trip-id="trip.id"
     :labels="navLabels"
+    :can-add="!trip.closed && !trip.locked"
     @add="addExpense"
   />
 </template>

@@ -3,16 +3,17 @@ import { flushPromises } from '@vue/test-utils'
 import type { Balances, VietQr } from '@/entities'
 import { account, balances, payment, serveBalances } from '@/features/balances/balanceFixtures'
 import { balancesRouter, mountBalances, unmountBalances } from '@/features/balances/balanceHarness'
-import { api } from '@/lib/api'
-import { click, dialog } from '@/lib/domTestHelpers'
+import { api, ApiError } from '@/lib/api'
+import { click, dialog, submitSheet, typeInto } from '@/lib/domTestHelpers'
 import { mockSplit } from '@/lib/splitTestHelpers'
 
 vi.mock('@/lib/api', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/lib/api')>()),
-  api: { get: vi.fn(), post: vi.fn(), delete: vi.fn() },
+  api: { get: vi.fn(), put: vi.fn(), post: vi.fn(), delete: vi.fn() },
 }))
 
 const get = vi.mocked(api.get)
+const put = vi.mocked(api.put)
 const post = vi.mocked(api.post)
 
 const qr: VietQr = {
@@ -36,6 +37,7 @@ const transferParam = () => balancesRouter().currentRoute.value.query.transfer
 
 beforeEach(() => {
   get.mockReset()
+  put.mockReset().mockResolvedValue(account)
   post.mockReset().mockResolvedValue({})
   mockSplit(true)
 })
@@ -101,6 +103,43 @@ describe('balances on a split layout', () => {
     expect(pane.text()).toContain('Everyone is square')
     expect(pane.find('a[href="/trips/abc/summary"]').exists()).toBe(true)
     expect(transferParam()).toBeUndefined()
+  })
+
+  it('reloads the QR panel automatically after saving a missing payee bank account', async () => {
+    let saved = false
+    get.mockImplementation((path: string) => {
+      if (path === '/banks') {
+        return Promise.resolve({ banks: [{ bin: '970436', code: 'VCB', short_name: 'Vietcombank' }] })
+      }
+      if (path.includes('/vietqr?')) {
+        return saved
+          ? Promise.resolve(qr)
+          : Promise.reject(new ApiError(409, 'no_bank_account', 'No bank account'))
+      }
+      return serveBalances({}, balances, [payment], saved ? [account] : [])(path)
+    })
+
+    const view = await mountBalances()
+    const pane = view.get('.split-detail')
+    expect(pane.text()).not.toContain('Vietcombank')
+
+    await click(pane.get('button').element)
+    await flushPromises()
+    await click(dialog()?.querySelectorAll('[aria-pressed]')[0])
+    const inputs = dialog()?.querySelectorAll('input')
+    await typeInto(inputs?.[1], '1234567890')
+    await typeInto(inputs?.[2], 'ALEX RIVERA')
+
+    saved = true
+    await submitSheet()
+
+    expect(put).toHaveBeenCalledWith('/trips/abc/members/me/bank-account', {
+      bank_bin: '970436',
+      account_number: '1234567890',
+      account_name: 'ALEX RIVERA',
+    })
+    expect(pane.text()).toContain('Vietcombank')
+    expect(pane.text()).toContain('6789')
   })
 
   it('does not pick or open a QR on a locked trip', async () => {

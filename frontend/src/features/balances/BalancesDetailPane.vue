@@ -6,6 +6,7 @@ import BaseCard from '@/components/BaseCard.vue'
 import type { BankAccount, Transfer, TripDetail } from '@/entities'
 import SummaryLink from '@/features/balances/SummaryLink.vue'
 import TransferPanel from '@/features/balances/TransferPanel.vue'
+import { payeeAccountKey } from '@/features/balances/balanceRules'
 import { transferKey } from '@/features/balances/useTransferSelection'
 import { useTripSource } from '@/lib/tripSource'
 
@@ -40,7 +41,7 @@ const title = computed(() =>
     </h2>
     <!-- A partial payment changes the amount, which starts the panel afresh. -->
     <TransferPanel
-      :key="`${transferKey(selected)}:${selected.amount}`"
+      :key="`${transferKey(selected)}:${selected.amount}:${payeeAccountKey(accounts, selected.payee)}`"
       :trip="trip"
       :transfer="selected"
       :accounts="accounts"

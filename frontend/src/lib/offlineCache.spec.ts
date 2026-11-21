@@ -4,6 +4,8 @@ import {
   evictTripCacheOnAuthError,
   forgetAllTripCopies,
   forgetTripCopy,
+  forgetTripListCopy,
+  invalidateAfterWrite,
 } from '@/lib/offlineCache'
 
 const ORIGIN = 'https://app.example'
@@ -84,6 +86,51 @@ describe('evictTripCacheOnAuthError', () => {
   it.each([500, 503])('leaves trip cache intact on status %i', async (status) => {
     const { open, deleted } = stubCaches(['/api/trips/abc'])
     await evictTripCacheOnAuthError('abc', status)
+    expect(open).not.toHaveBeenCalled()
+    expect(deleted()).toEqual([])
+  })
+})
+
+describe('forgetTripListCopy', () => {
+  it('deletes only the cached trip list without touching individual trips', async () => {
+    const { deleted } = stubCaches(['/api/trips', '/api/trips/abc', '/api/other'])
+    await forgetTripListCopy()
+    expect(deleted()).toEqual(['/api/trips'])
+  })
+})
+
+describe('invalidateAfterWrite', () => {
+  it('evicts the mutated trip and the trip list', async () => {
+    const { deleted } = stubCaches([
+      '/api/trips',
+      '/api/trips/abc',
+      '/api/trips/abc/expenses',
+      '/api/trips/other',
+    ])
+    await invalidateAfterWrite('/trips/abc/expenses')
+    expect(deleted().sort()).toEqual(['/api/trips', '/api/trips/abc', '/api/trips/abc/expenses'])
+  })
+
+  it('handles encoded trip IDs and query strings cleanly', async () => {
+    const { deleted } = stubCaches([
+      '/api/trips',
+      '/api/trips/trip%201',
+      '/api/trips/trip%201/fund',
+      '/api/trips/trip%2010',
+    ])
+    await invalidateAfterWrite('/trips/trip%201/fund?foo=bar')
+    expect(deleted().sort()).toEqual(['/api/trips', '/api/trips/trip%201', '/api/trips/trip%201/fund'])
+  })
+
+  it.each(['/trips', '/join'])('evicts only the trip list on %s', async (path) => {
+    const { deleted } = stubCaches(['/api/trips', '/api/trips/abc'])
+    await invalidateAfterWrite(path)
+    expect(deleted()).toEqual(['/api/trips'])
+  })
+
+  it('does nothing for non-trip writes such as join preview', async () => {
+    const { open, deleted } = stubCaches(['/api/trips', '/api/trips/abc'])
+    await invalidateAfterWrite('/join/preview')
     expect(open).not.toHaveBeenCalled()
     expect(deleted()).toEqual([])
   })
