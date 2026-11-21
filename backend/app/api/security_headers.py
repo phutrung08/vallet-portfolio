@@ -42,6 +42,8 @@ class SecurityHeadersMiddleware:
                 headers = MutableHeaders(scope=message)
                 for name, value in self._headers.items():
                     headers[name] = value
+                if "cache-control" not in headers:
+                    headers["Cache-Control"] = "private, no-cache"
             await send(message)
 
         await self.app(scope, receive, send_with_headers)

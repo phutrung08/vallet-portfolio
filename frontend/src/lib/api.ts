@@ -1,4 +1,4 @@
-import { evictTripCacheOnAuthError, forgetAllTripCopies } from '@/lib/offlineCache'
+import { evictTripCacheOnAuthError, forgetAllTripCopies, invalidateAfterWrite } from '@/lib/offlineCache'
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
@@ -156,6 +156,7 @@ export async function apiRequest<T>(
     throw httpError(response.status, parsed)
   }
   if (!parsed.ok) throw new ApiError(response.status, 'invalid_response', 'Invalid server response')
+  if (method !== 'GET') await invalidateAfterWrite(path).catch(() => undefined)
   return parsed.value as T
 }
 

@@ -82,6 +82,56 @@ describe('request shape', () => {
   })
 })
 
+describe('write-through cache invalidation', () => {
+  function stubCache(urls: string[]) {
+    const stored = urls.map((url) => new Request(`https://app.example${url}`))
+    const cache = {
+      keys: vi.fn(() => Promise.resolve(stored)),
+      delete: vi.fn((request: Request) => Promise.resolve(stored.includes(request))),
+    }
+    const open = vi.fn(() => Promise.resolve(cache))
+    vi.stubGlobal('caches', { open })
+    return {
+      open,
+      deleted: () => cache.delete.mock.calls.map(([req]) => new URL(req.url).pathname),
+    }
+  }
+
+  it.each(['post', 'put', 'patch', 'delete'] as const)(
+    'evicts trip and list caches after successful %s mutation',
+    async (method) => {
+      const { deleted } = stubCache([
+        '/api/trips',
+        '/api/trips/t1',
+        '/api/trips/t1/balances',
+        '/api/trips/t2',
+      ])
+      respond('{"ok":true}')
+      await (method === 'delete'
+        ? api.delete('/trips/t1/expenses/e1')
+        : api[method]('/trips/t1/expenses', {}))
+      expect(deleted().sort()).toEqual(['/api/trips', '/api/trips/t1', '/api/trips/t1/balances'])
+    },
+  )
+
+  it('does not evict cache on GET or failed mutations', async () => {
+    const { open } = stubCache(['/api/trips', '/api/trips/t1'])
+    respond('{}')
+    await api.get('/trips/t1')
+    expect(open).not.toHaveBeenCalled()
+
+    respond(JSON.stringify({ detail: 'bad' }), 422)
+    await rejection(api.post('/trips/t1/expenses', {}))
+    expect(open).not.toHaveBeenCalled()
+  })
+
+  it('ignores cache errors after a successful write', async () => {
+    vi.stubGlobal('caches', { open: vi.fn(() => Promise.reject(new Error('quota'))) })
+    respond('{"id":"t1"}')
+    await expect(api.post('/trips', {})).resolves.toEqual({ id: 't1' })
+  })
+})
+
 describe('responses', () => {
   it('parses a JSON body', async () => {
     respond('{"id":"a"}')
