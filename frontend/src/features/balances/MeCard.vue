@@ -23,14 +23,14 @@ const detail = computed(() =>
 
 <template>
   <BaseCard
-    tone="green"
+    :tone="status === 'pay' ? 'yellow' : 'green'"
     class="flex flex-col gap-1 p-4"
   >
     <p class="text-sm font-medium">
       {{ t(`balances.me.${status}`) }}
     </p>
     <p class="font-heading text-4xl leading-none font-semibold break-words tabular-nums">
-      {{ signed(standing.net) }}
+      {{ status === 'pay' ? money(Math.abs(standing.net)) : signed(standing.net) }}
     </p>
     <p class="text-sm tabular-nums">
       {{ detail }}
