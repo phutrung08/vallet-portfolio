@@ -38,8 +38,8 @@ afterEach(() => {
 })
 
 describe('readStoredTheme', () => {
-  it('defaults to the system theme', () => {
-    expect(readStoredTheme()).toBe('system')
+  it('defaults to the light theme', () => {
+    expect(readStoredTheme()).toBe('light')
   })
 
   it.each(['light', 'dark', 'system'] as const)('returns the stored %s choice', (choice) => {
@@ -49,14 +49,14 @@ describe('readStoredTheme', () => {
 
   it('ignores an unknown stored value', () => {
     localStorage.setItem(THEME_STORAGE_KEY, 'sepia')
-    expect(readStoredTheme()).toBe('system')
+    expect(readStoredTheme()).toBe('light')
   })
 
-  it('falls back to the system theme when storage throws', () => {
+  it('falls back to the light theme when storage throws', () => {
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
       throw new Error('blocked')
     })
-    expect(readStoredTheme()).toBe('system')
+    expect(readStoredTheme()).toBe('light')
   })
 })
 
@@ -97,6 +97,7 @@ describe('theme-color meta', () => {
   })
 
   it('updates when the system preference changes while following it', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'system')
     const toggle = stubSystemDark(false)
     initTheme()
     expect(meta()?.getAttribute('content')).toBe(THEME_COLORS.light)
@@ -130,9 +131,14 @@ describe('setTheme', () => {
 })
 
 describe('initTheme', () => {
-  it('applies the stored choice at startup', () => {
-    localStorage.setItem(THEME_STORAGE_KEY, 'light')
+  it('pins the light theme by default when nothing is stored', () => {
     initTheme()
     expect(document.documentElement.getAttribute('data-theme')).toBe('light')
+  })
+
+  it('applies the stored choice at startup', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+    initTheme()
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
   })
 })
