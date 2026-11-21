@@ -1,7 +1,7 @@
 export const THEME_STORAGE_KEY = 'vallet.theme'
-export const THEME_CHOICES = ['system', 'light', 'dark'] as const
+export const THEME_CHOICES = ['light', 'dark', 'system'] as const
 export type ThemeChoice = (typeof THEME_CHOICES)[number]
-export const DEFAULT_THEME: ThemeChoice = 'system'
+export const DEFAULT_THEME: ThemeChoice = 'light'
 /** Browser chrome colors matching brand green (light) and dark canvas (dark). */
 export const THEME_COLORS = { light: '#17A865', dark: '#10201F' } as const
 

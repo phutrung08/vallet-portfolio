@@ -73,11 +73,17 @@ describe('SettingsView', () => {
     expect(dark?.attributes('aria-pressed')).toBe('true')
   })
 
-  it('starts from the stored theme', async () => {
-    localStorage.setItem(THEME_STORAGE_KEY, 'light')
+  it('defaults to light mode when no theme is stored', async () => {
     const wrapper = await mountSettings()
     const pressed = wrapper.findAll('button[aria-pressed="true"]').map((b) => b.text())
     expect(pressed).toContain(texts.en.settings.theme.light)
+  })
+
+  it('starts from the stored theme', async () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+    const wrapper = await mountSettings()
+    const pressed = wrapper.findAll('button[aria-pressed="true"]').map((b) => b.text())
+    expect(pressed).toContain(texts.en.settings.theme.dark)
   })
 
   it('still applies the theme when storage fails', async () => {
