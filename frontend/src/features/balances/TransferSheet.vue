@@ -4,6 +4,8 @@ import { useI18n } from 'vue-i18n'
 import BottomSheet from '@/components/BottomSheet.vue'
 import type { BankAccount, Transfer, TripDetail } from '@/entities'
 import TransferPanel from '@/features/balances/TransferPanel.vue'
+import { payeeAccountKey } from '@/features/balances/balanceRules'
+import { transferKey } from '@/features/balances/useTransferSelection'
 
 const props = defineProps<{
   trip: TripDetail
@@ -31,6 +33,7 @@ const title = computed(() =>
   >
     <TransferPanel
       v-if="transfer"
+      :key="`${transferKey(transfer)}:${transfer.amount}:${payeeAccountKey(accounts, transfer.payee)}`"
       :trip="trip"
       :transfer="transfer"
       :accounts="accounts"

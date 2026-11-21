@@ -6,10 +6,14 @@ import { useNavDrag } from '@/lib/useNavDrag'
 import { useNavPlacement } from '@/lib/useNavPlacement'
 import { useTripSource } from '@/lib/tripSource'
 
-const props = defineProps<{
-  tripId: string
-  labels: { expenses: string; balances: string; add: string; members: string; settings: string }
-}>()
+const props = withDefaults(
+  defineProps<{
+    tripId: string
+    labels: { expenses: string; balances: string; add: string; members: string; settings: string }
+    canAdd?: boolean
+  }>(),
+  { canAdd: true },
+)
 
 defineEmits<{ add: [] }>()
 
@@ -52,7 +56,7 @@ const { enabled: canDrag, phase, zones, target, moved } = useNavDrag(useTemplate
         </RouterLink>
       </li>
       <li
-        v-if="!source.readonly"
+        v-if="!source.readonly && canAdd"
         class="rail:order-first"
       >
         <button

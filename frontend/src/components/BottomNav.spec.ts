@@ -15,7 +15,7 @@ const labels = {
 const stub = { template: '<div />' }
 let wrapper: VueWrapper | undefined
 
-async function mountAt(path: string, source?: TripSource) {
+async function mountAt(path: string, source?: TripSource, canAdd?: boolean) {
   const router = createRouter({
     history: createMemoryHistory(),
     routes: [
@@ -30,7 +30,7 @@ async function mountAt(path: string, source?: TripSource) {
   await router.push(path)
   await router.isReady()
   wrapper = mount(BottomNav, {
-    props: { tripId: 't1', labels },
+    props: { tripId: 't1', labels, ...(canAdd === undefined ? {} : { canAdd }) },
     global: {
       plugins: [router],
       provide: source ? { [tripSourceKey as symbol]: source } : {},
@@ -108,6 +108,12 @@ describe('BottomNav', () => {
     const w = await mountAt('/trips/t1', demo)
     expect(w.findAll('li')).toHaveLength(2)
     expect(w.findAll('a')).toHaveLength(2)
+    expect(w.find('button').exists()).toBe(false)
+  })
+
+  it('hides the add button when canAdd is false while keeping navigation links', async () => {
+    const w = await mountAt('/trips/t1', undefined, false)
+    expect(w.findAll('a')).toHaveLength(4)
     expect(w.find('button').exists()).toBe(false)
   })
 
