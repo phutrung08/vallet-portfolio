@@ -8,6 +8,7 @@ import FundContent from '@/features/fund/FundContent.vue'
 import { useFundPage } from '@/features/fund/useFundPage'
 import { localIsoDate } from '@/features/trips/tripMeta'
 import { ApiError } from '@/lib/api'
+import { useDesktopBarTrip } from '@/lib/desktopBarContext'
 import { errorMessageKey } from '@/lib/errors'
 
 // Injectable clock lets tests pin "today" deterministically.
@@ -17,6 +18,7 @@ const { t } = useI18n()
 const route = useRoute()
 const tripId = computed(() => String(route.params.tripId))
 const { trip, fund, status, error, reload, refresh } = useFundPage(() => tripId.value)
+useDesktopBarTrip(() => trip.value)
 </script>
 
 <template>

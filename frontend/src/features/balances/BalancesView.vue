@@ -17,6 +17,7 @@ import BankAccountSheet from '@/features/bank/BankAccountSheet.vue'
 import { useAddExpense } from '@/features/expenses/useAddExpense'
 import { ApiError } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
+import { useDesktopBarTrip } from '@/lib/desktopBarContext'
 import { useTripSource } from '@/lib/tripSource'
 import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 import { usePullToRefresh } from '@/lib/usePullToRefresh'
@@ -37,6 +38,7 @@ const addExpense = useAddExpense(() => tripId.value)
 
 // Settlement payments are fine on a closed trip; only a locked trip (or demo mode) is read-only.
 const { readonly } = useTripSource()
+useDesktopBarTrip(() => trip.value, readonly)
 const editable = computed(() => trip.value !== undefined && !trip.value.locked && !readonly)
 // From the `split` breakpoint the open transfer renders in the right detail pane.
 const split = useSplit()

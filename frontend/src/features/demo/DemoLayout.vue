@@ -13,7 +13,7 @@ const isDemoOnly = computed(() => import.meta.env.VITE_DEMO_ONLY === 'true')
 
 <template>
   <div class="bg-yellow-soft border-edge border-b-[1.5px]">
-    <div class="mx-auto flex max-w-md items-center justify-between gap-3 px-4 py-2">
+    <div class="mx-auto flex max-w-md items-center justify-between gap-3 px-4 py-2 desktop:max-w-6xl">
       <p class="min-w-0 text-sm font-medium">
         {{ t('demo.banner') }}
       </p>
