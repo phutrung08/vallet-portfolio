@@ -31,6 +31,13 @@
     "add": "Thêm khoản chi",
     "members": "Thành viên",
     "settings": "Cài đặt",
+    "short": {
+      "expenses": "Chi tiêu",
+      "balances": "Số dư",
+      "add": "Thêm",
+      "members": "Nhóm",
+      "settings": "Cài đặt"
+    },
     "moved": {
       "bottom-left": "Đã chuyển thanh điều hướng xuống góc dưới bên trái",
       "bottom-center": "Đã chuyển thanh điều hướng xuống giữa phía dưới",

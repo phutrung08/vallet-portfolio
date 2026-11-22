@@ -21,6 +21,7 @@ describe('design tokens and color-scheme setup', () => {
   it('defines responsive layout breakpoints and shadows', () => {
     expect(tokensCss).toContain('--breakpoint-rail: 37.5rem')
     expect(tokensCss).toContain('--breakpoint-split: 42rem')
+    expect(tokensCss).toContain('--breakpoint-desktop: 64rem')
     expect(tokensCss).toContain('--breakpoint-phone-lg: 25rem')
     expect(tokensCss).toContain('@utility ink-border')
     expect(tokensCss).toContain('@utility card-ink')
@@ -82,6 +83,14 @@ describe('split layout rules', () => {
     expect(splitCss).toMatch(/#app \{\s+display: flex;\s+flex-direction: column;/)
     expect(splitCss).toContain('flex: 1 1 0;')
   })
+
+  it('frames desktop split panes before foldable overrides reset them', () => {
+    const desktopIndex = splitCss.indexOf('@media (width >= theme(--breakpoint-desktop))')
+    const foldableIndex = splitCss.indexOf('@media (horizontal-viewport-segments: 2)')
+    expect(desktopIndex).toBeGreaterThan(-1)
+    expect(foldableIndex).toBeGreaterThan(desktopIndex)
+    expect(splitCss).toContain('box-shadow: var(--shadow-hard);')
+  })
 })
 
 describe('navigation placement rules', () => {
@@ -111,5 +120,14 @@ describe('navigation placement rules', () => {
     expect(navCss).toContain('and (width < theme(--breakpoint-rail))')
     expect(navCss).toMatch(/nav\[data-phone\] \{\s+position: fixed;/)
     expect(navCss).toContain('prefers-reduced-motion: no-preference')
+  })
+
+  it('widens desktop rail before foldable viewport rules reset it', () => {
+    const desktopIndex = navCss.indexOf('@media (width >= theme(--breakpoint-desktop))')
+    const foldableIndex = navCss.indexOf('@media (horizontal-viewport-segments: 2)')
+    expect(desktopIndex).toBeGreaterThan(-1)
+    expect(foldableIndex).toBeGreaterThan(desktopIndex)
+    expect(navCss).toContain('--nav-side-size: 6.5rem;')
+    expect(navCss).toContain('width: 5rem;')
   })
 })

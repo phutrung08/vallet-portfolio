@@ -65,6 +65,44 @@
 }
 
 /*
+ * Desktop and laptop viewports: frame list and detail as elevated cards with hard shadows
+ * and widen centered single-column screens comfortably.
+ */
+@media (width >= theme(--breakpoint-desktop)) {
+  #app:has(.split-layout) {
+    height: 100dvh;
+  }
+
+  .split-layout {
+    grid-template-columns: clamp(20rem, 35vw, 27rem) minmax(0, 44rem);
+    gap: 1.25rem;
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .split-pane {
+    background-color: var(--color-surface);
+    border: 1.5px solid var(--color-edge);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-hard);
+  }
+
+  .split-detail {
+    border-left: 1.5px solid var(--color-edge);
+  }
+
+  .col-center {
+    max-width: 38rem;
+  }
+
+  .col-nav {
+    margin-left: calc(
+      var(--nav-reserve-left) + max(0px, (100% - var(--nav-reserve-left) - var(--nav-reserve-right) - 38rem) / 2)
+    );
+    width: min(38rem, 100% - var(--nav-reserve-left) - var(--nav-reserve-right));
+  }
+}
+
+/*
  * Foldables and dual screens (Viewport Segments API), progressive enhancement like nav.css.
  * Vertical hinge: the list fills the left segment and the detail the right one, whatever the width;
  * the nav reserve comes off the segment the rail sits in.
@@ -76,6 +114,8 @@
       calc(env(viewport-segment-width 1 0) - var(--nav-reserve-right));
     grid-template-rows: minmax(0, 1fr);
     column-gap: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0));
+    row-gap: 0;
+    padding: 0;
     justify-content: start;
     flex: 1 1 0;
     min-height: 0;
@@ -84,6 +124,10 @@
 
   .split-pane {
     display: flex;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
     overflow-y: auto;
     overscroll-behavior-y: contain;
   }

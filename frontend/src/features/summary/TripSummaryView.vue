@@ -10,7 +10,7 @@ import SummaryContent from '@/features/summary/SummaryContent.vue'
 import { useTripSummary } from '@/features/summary/useTripSummary'
 import { ApiError } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
-import { useNavLabels } from '@/lib/useNavLabels'
+import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -18,6 +18,7 @@ const tripId = computed(() => String(route.params.tripId))
 const { trip, summary, status, error, reload } = useTripSummary(() => tripId.value)
 watch(tripId, reload)
 const navLabels = useNavLabels()
+const navShortLabels = useNavShortLabels()
 
 const addExpense = useAddExpense(() => tripId.value)
 </script>
@@ -63,6 +64,7 @@ const addExpense = useAddExpense(() => tripId.value)
       v-if="trip"
       :trip-id="trip.id"
       :labels="navLabels"
+      :short-labels="navShortLabels"
       :can-add="!trip.closed && !trip.locked"
       @add="addExpense"
     />

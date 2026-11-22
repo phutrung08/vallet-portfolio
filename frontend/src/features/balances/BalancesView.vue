@@ -18,7 +18,7 @@ import { useAddExpense } from '@/features/expenses/useAddExpense'
 import { ApiError } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
 import { useTripSource } from '@/lib/tripSource'
-import { useNavLabels } from '@/lib/useNavLabels'
+import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 import { usePullToRefresh } from '@/lib/usePullToRefresh'
 import { useSplit } from '@/lib/useSplit'
 
@@ -31,6 +31,7 @@ const layout = useTemplateRef('layout')
 const pull = usePullToRefresh(computed(() => layout.value?.listPane ?? null), refresh)
 watch(tripId, reload)
 const navLabels = useNavLabels()
+const navShortLabels = useNavShortLabels()
 
 const addExpense = useAddExpense(() => tripId.value)
 
@@ -134,6 +135,7 @@ const myAccount = computed(() => accounts.value.find((item) => item.member_id ==
     v-if="trip"
     :trip-id="trip.id"
     :labels="navLabels"
+    :short-labels="navShortLabels"
     :can-add="!trip.closed && !trip.locked"
     @add="addExpense"
   />
