@@ -111,6 +111,10 @@ nav[data-phone] {
     --nav-side-size: 6.5rem;
   }
 
+  :root:has(.desktop-top-bar) {
+    --desktop-bar-height: 3.5rem;
+  }
+
   nav[data-wide] {
     top: calc(var(--desktop-bar-height) + 1.25rem + env(safe-area-inset-top));
     bottom: calc(1.25rem + env(safe-area-inset-bottom));
@@ -128,8 +132,16 @@ nav[data-phone] {
 
 /* Vertical hinge: the rail stays in the left segment, the content column lives wholly in the right one. */
 @media (horizontal-viewport-segments: 2) {
+  .desktop-top-bar {
+    display: none;
+  }
+
   :root {
     --nav-side-size: 5.5rem;
+  }
+
+  :root:has(.desktop-top-bar) {
+    --desktop-bar-height: 0px;
   }
 
   nav[data-wide] {

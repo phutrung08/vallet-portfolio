@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 import { RouterView } from 'vue-router'
+import DesktopTopBar from '@/components/DesktopTopBar.vue'
 import OfflineBanner from '@/components/OfflineBanner.vue'
 import UpdateToast from '@/components/UpdateToast.vue'
 
@@ -10,6 +11,7 @@ const { needRefresh, updateServiceWorker } = useRegisterSW()
 
 <template>
   <OfflineBanner />
+  <DesktopTopBar />
   <RouterView />
   <UpdateToast
     :open="needRefresh"

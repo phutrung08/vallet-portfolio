@@ -560,5 +560,11 @@
       "trip_reopened": "{actor} reopened the trip",
       "unknown": "{actor} updated the trip"
     }
+  },
+  "desktopBar": {
+    "trips": "Trips",
+    "myTrips": "My trips",
+    "newTrip": "New trip",
+    "demo": "Demo"
   }
 }

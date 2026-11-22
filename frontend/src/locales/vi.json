@@ -560,5 +560,11 @@
       "trip_reopened": "{actor} mở lại chuyến đi",
       "unknown": "{actor} thay đổi chuyến đi"
     }
+  },
+  "desktopBar": {
+    "trips": "Chuyến đi",
+    "myTrips": "Chuyến đi của tôi",
+    "newTrip": "Tạo mới",
+    "demo": "Bản mẫu"
   }
 }

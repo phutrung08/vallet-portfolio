@@ -20,6 +20,7 @@ import TripSummaryCard from '@/features/trips/TripSummaryCard.vue'
 import { useTripPage } from '@/features/trips/useTripPage'
 import { ApiError } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
+import { useDesktopBarTrip } from '@/lib/desktopBarContext'
 import { useTripSource } from '@/lib/tripSource'
 import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 import { usePullToRefresh } from '@/lib/usePullToRefresh'
@@ -35,6 +36,7 @@ const { trip, days, fund, spentTotal, status, error, cachedCopy, reload, refresh
   source.read,
 )
 watch(tripId, reload)
+useDesktopBarTrip(() => trip.value, source.readonly)
 const history = useTemplateRef('history')
 const split = useSplit()
 const selection = useExpenseSelection(split)
@@ -78,7 +80,7 @@ const addExpense = useAddExpense(() => tripId.value)
       <header class="flex items-center gap-1">
         <RouterLink
           to="/"
-          :class="[iconLink, '-ml-2 justify-center px-2']"
+          :class="[iconLink, '-ml-2 justify-center px-2 desktop:hidden']"
           :aria-label="t('trip.back')"
         >
           <ChevronLeft
@@ -100,7 +102,7 @@ const addExpense = useAddExpense(() => tripId.value)
         <RouterLink
           v-if="trip && !source.readonly"
           :to="`/trips/${encodeURIComponent(trip.id)}/members`"
-          :class="[iconLink, '-mr-2 size-11 justify-center']"
+          :class="[iconLink, '-mr-2 size-11 justify-center desktop:hidden']"
           :aria-label="t('trip.share')"
         >
           <Share2

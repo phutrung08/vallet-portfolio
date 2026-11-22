@@ -14,6 +14,7 @@ import { useMemberSelection } from '@/features/members/useMemberSelection'
 import { useShareLink } from '@/features/members/useShareLink'
 import { ApiError, api } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
+import { useDesktopBarTrip } from '@/lib/desktopBarContext'
 import { useAsyncData } from '@/lib/useAsyncData'
 import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 import { useSplit } from '@/lib/useSplit'
@@ -25,6 +26,7 @@ const { data: trip, status, error, reload, refresh } = useAsyncData((signal) =>
   api.get<TripDetail>(`/trips/${encodeURIComponent(tripId.value)}`, { signal }),
 )
 watch(tripId, reload)
+useDesktopBarTrip(() => trip.value)
 const share = useShareLink(
   () => tripId.value,
   () => trip.value?.name ?? '',

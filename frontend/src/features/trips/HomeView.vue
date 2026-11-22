@@ -63,7 +63,10 @@ function pick(trip: TripSummary): void {
         :refreshing="pull.refreshing.value"
       />
       <header class="flex items-center gap-1">
-        <AppWordmark class="mr-auto" />
+        <AppWordmark class="mr-auto desktop:hidden" />
+        <span class="font-heading mr-auto hidden text-xl font-semibold desktop:block">
+          {{ t('desktopBar.myTrips') }}
+        </span>
         <RefreshButton
           :refreshing="pull.refreshing.value"
           @refresh="pull.refresh"
@@ -71,7 +74,7 @@ function pick(trip: TripSummary): void {
         <RouterLink
           to="/settings"
           :aria-label="t('nav.settings')"
-          :class="settingsLink"
+          :class="[settingsLink, 'desktop:hidden']"
         >
           <Settings
             :size="22"
