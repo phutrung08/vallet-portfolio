@@ -3,6 +3,7 @@ import { flushPromises, mount, type VueWrapper } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import BottomNav from '@/components/BottomNav.vue'
 import { initNavPlacement, useNavPlacement } from '@/lib/useNavPlacement'
+import type { NavLabels } from '@/lib/useNavLabels'
 import { tripSourceKey, type TripSource } from '@/lib/tripSource'
 
 const labels = {
@@ -15,7 +16,7 @@ const labels = {
 const stub = { template: '<div />' }
 let wrapper: VueWrapper | undefined
 
-async function mountAt(path: string, source?: TripSource, canAdd?: boolean) {
+async function mountAt(path: string, source?: TripSource, canAdd?: boolean, shortLabels?: NavLabels) {
   const router = createRouter({
     history: createMemoryHistory(),
     routes: [
@@ -30,7 +31,12 @@ async function mountAt(path: string, source?: TripSource, canAdd?: boolean) {
   await router.push(path)
   await router.isReady()
   wrapper = mount(BottomNav, {
-    props: { tripId: 't1', labels, ...(canAdd === undefined ? {} : { canAdd }) },
+    props: {
+      tripId: 't1',
+      labels,
+      ...(canAdd === undefined ? {} : { canAdd }),
+      ...(shortLabels === undefined ? {} : { shortLabels }),
+    },
     global: {
       plugins: [router],
       provide: source ? { [tripSourceKey as symbol]: source } : {},
@@ -135,5 +141,29 @@ describe('BottomNav', () => {
     expect(w.get('nav').classes()).toContain('rounded-pill')
     expect(w.get('button').element.parentElement?.classList).toContain('rail:order-first')
     expect(w.findAll('li').at(-1)?.classes()).toContain('rail:mt-auto')
+  })
+
+  it('renders decorative short desktop labels using shortLabels prop and labels fallback', async () => {
+    const withShort = await mountAt('/trips/t1', undefined, undefined, {
+      expenses: 'Exp',
+      balances: 'Bal',
+      add: 'New',
+      members: 'Grp',
+      settings: 'Cfg',
+    })
+    const hiddenLabels = withShort.findAll('span[aria-hidden="true"].desktop\\:block')
+    expect(hiddenLabels.map((node) => node.text())).toEqual(['Exp', 'Bal', 'New', 'Grp', 'Cfg'])
+    expect(withShort.findAll('a')[0]?.attributes('aria-label')).toBe('Expenses')
+    expect(withShort.get('button').attributes('aria-label')).toBe('Add expense')
+
+    wrapper?.unmount()
+    const fallback = await mountAt('/trips/t1')
+    expect(fallback.findAll('span[aria-hidden="true"].desktop\\:block').map((node) => node.text())).toEqual([
+      'Expenses',
+      'Balances',
+      'Add expense',
+      'Members',
+      'Settings',
+    ])
   })
 })

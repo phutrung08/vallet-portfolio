@@ -15,7 +15,7 @@ import { useShareLink } from '@/features/members/useShareLink'
 import { ApiError, api } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
 import { useAsyncData } from '@/lib/useAsyncData'
-import { useNavLabels } from '@/lib/useNavLabels'
+import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 import { useSplit } from '@/lib/useSplit'
 
 const { t } = useI18n()
@@ -33,6 +33,7 @@ const share = useShareLink(
 const split = useSplit()
 const selection = useMemberSelection(split, () => trip.value)
 const navLabels = useNavLabels()
+const navShortLabels = useNavShortLabels()
 
 const addExpense = useAddExpense(() => tripId.value)
 </script>
@@ -94,6 +95,7 @@ const addExpense = useAddExpense(() => tripId.value)
     v-if="trip"
     :trip-id="trip.id"
     :labels="navLabels"
+    :short-labels="navShortLabels"
     :can-add="!trip.closed && !trip.locked"
     @add="addExpense"
   />

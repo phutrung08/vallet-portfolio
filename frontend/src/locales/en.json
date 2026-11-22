@@ -31,6 +31,13 @@
     "add": "Add expense",
     "members": "Members",
     "settings": "Settings",
+    "short": {
+      "expenses": "Expenses",
+      "balances": "Balances",
+      "add": "Add",
+      "members": "Members",
+      "settings": "Settings"
+    },
     "moved": {
       "bottom-left": "Navigation moved to the bottom left",
       "bottom-center": "Navigation moved to the bottom center",

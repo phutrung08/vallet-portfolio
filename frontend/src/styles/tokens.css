@@ -104,6 +104,8 @@
   --breakpoint-rail: 37.5rem;
   /* SplitLayout displays two side-by-side panes from tablet/unfolded widths (`split:` variant). */
   --breakpoint-split: 42rem;
+  /* Desktop/laptop workspace frames the two split panes as elevated cards with a labeled rail (`desktop:` variant). */
+  --breakpoint-desktop: 64rem;
   /* Large phones allow movable bottom/edge dock placement. */
   --breakpoint-phone-lg: 25rem;
 

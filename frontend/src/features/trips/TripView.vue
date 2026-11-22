@@ -21,7 +21,7 @@ import { useTripPage } from '@/features/trips/useTripPage'
 import { ApiError } from '@/lib/api'
 import { errorMessageKey } from '@/lib/errors'
 import { useTripSource } from '@/lib/tripSource'
-import { useNavLabels } from '@/lib/useNavLabels'
+import { useNavLabels, useNavShortLabels } from '@/lib/useNavLabels'
 import { usePullToRefresh } from '@/lib/usePullToRefresh'
 import { useSplit } from '@/lib/useSplit'
 
@@ -60,6 +60,7 @@ const pull = usePullToRefresh(computed(() => layout.value?.listPane ?? null), ()
 )
 
 const navLabels = useNavLabels()
+const navShortLabels = useNavShortLabels()
 const iconLink =
   'flex min-h-11 items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky'
 
@@ -163,6 +164,7 @@ const addExpense = useAddExpense(() => tripId.value)
     v-if="trip"
     :trip-id="trip.id"
     :labels="navLabels"
+    :short-labels="navShortLabels"
     :can-add="!trip.closed && !trip.locked"
     @add="addExpense"
   />
